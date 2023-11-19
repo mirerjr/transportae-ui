@@ -1,7 +1,23 @@
-<template> 
-<router-link></router-link>   
+<template>
+    <main>
+        <component :is="layoutAtual || 'div'">
+            <router-view />
+        </component>
+    </main>
 </template>
 
 <script setup>
-import { RouterLink } from 'vue-router';
+import { provide, shallowRef } from 'vue';
+import { RouterView } from 'vue-router';
+import { router } from './routes';
+import layouts from './layouts';
+
+const layoutPadrao = shallowRef("div");
+const layoutAtual = shallowRef("div");
+
+router.afterEach((to) => {
+    layoutAtual.value = layouts[to.meta.layout] ?? layoutPadrao.value;
+});
+
+provide('app:layout', layoutAtual);
 </script>

@@ -1,7 +1,6 @@
 <template>
-    <div>Login</div>
+    <div>Home</div>
 </template>
 
 <script setup>
 </script>
-
