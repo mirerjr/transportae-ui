@@ -1,6 +1,6 @@
 <template>
     <hr 
-        class="bg-blue-200 blur-[2px] absolute h-1 w-full my-8 border-0 -z-10"
+        class="bg-blue-200 blur-[2px] opacity-40 absolute h-1 w-full my-8 border-0 -z-10"
         :class="[classes, variantes[props.variante]]"
     >
 </template>
