@@ -1,9 +1,7 @@
 <template>
-    <main>
-        <component :is="layoutAtual || 'div'">
-            <router-view />
-        </component>
-    </main>
+    <component :is="layoutAtual || 'div'">
+        <router-view />
+    </component>
 </template>
 
 <script setup>
