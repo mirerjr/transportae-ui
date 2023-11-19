@@ -4,7 +4,7 @@ export const routes = [
     {
         path: "/login",
         name: "login",
-        meta: { layout: 'LayoutVazio' },
+        meta: { layout: 'LayoutLogo' },
         component: () => import("../views/Login.vue"),
     },
     {
