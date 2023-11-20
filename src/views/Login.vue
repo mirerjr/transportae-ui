@@ -6,25 +6,54 @@
         <template #conteudo>
             <form class="font-gudea w-96">
                 <div class="flex flex-col text-2xl mb-4">
-                    <BaseInput nome="Email" tipo="email"  />
+                    <BaseInput
+                        v-model="usuario.email"
+                        nome="Email" 
+                        tipo="email"
+                    />
                 </div>
                 <div class="flex flex-col text-2xl mb-8">
-                    <BaseInput nome="Senha" tipo="password" />
+                    <BaseInput
+                        v-model="usuario.senha"
+                        nome="Senha"
+                        tipo="password"
+                    />
                 </div>
             </form>
         </template>
         <template #rodape>
-            <BaseBtn class="text-2xl font-gudea">
-                <PhSignIn class="mr-1" /> Entrar
-            </BaseBtn>            
+            <BaseBtn
+                :disabled="isCarregando"
+                class="text-2xl font-gudea"
+                @click="logar()"
+            >
+                    <PhCircleNotch v-if="isCarregando" class="animate-spin" /> 
+                    <PhSignIn v-else class="mr-1" />
+                    {{ isCarregando ? 'Entrando' : 'Entrar' }}
+            </BaseBtn>
         </template>
     </BaseCard>
 </template>
 
 <script setup>
-import { PhUser, PhSignIn } from '@phosphor-icons/vue';
+import { ref, reactive } from 'vue';
+import { PhUser, PhSignIn, PhCircleNotch } from '@phosphor-icons/vue';
 import BaseInput from '../components/form/BaseInput.vue';
 import BaseBtn from '../components/form/BaseBtn.vue';
 import BaseCard from '../components/BaseCard.vue';
+import usuarioService from '../services/usuario-service'; 
+
+const isCarregando = ref(false);
+
+let usuario = reactive({
+    email: "",
+    senha: "",
+})
+
+async function logar() {
+    isCarregando.value = true;
+    const resposta = await usuarioService.logar(usuario);    
+    isCarregando.value = false;
+}
 </script>
 
