@@ -6,6 +6,8 @@
         :type="props.tipo"
         :name="props.nome"
         :placeholder="props.placeholder ?? props.nome"
+        :value="props.modelValue"
+        @input="atualizarValorInput"
         :class="hasErros 
             ? 'border-red-400 text-red-400 focus:border-red-400 focus:outline-red-400 focus:ring-red-400'
             : 'focus:outline-yellow-400 focus:ring-yellow-400'"
@@ -20,6 +22,8 @@
 
 <script setup>
 import { computed } from 'vue';
+
+const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
     nome: {
@@ -36,8 +40,15 @@ const props = defineProps({
     erros: {
         type: Array,
         default: [],
+    },
+    modelValue: {
+        required: true
     }
 });
 
 const hasErros = computed(() => props.erros.length > 0);
+
+function atualizarValorInput(event) {
+    emit("update:modelValue", event.target.value);
+}
 </script>
