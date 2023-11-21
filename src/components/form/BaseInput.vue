@@ -1,5 +1,5 @@
 <template>
-    <label :class="{'text-red-400': hasErros}" :for="props.nome">
+    <label :class="{'text-red-500': hasErros}" :for="props.nome">
         {{ props.nome }}
     </label>
     <input
@@ -13,7 +13,7 @@
             : 'focus:outline-yellow-400 focus:ring-yellow-400'"
         class="p-3 border-2 text-xl border-blue-100 rounded-lg"
     >
-    <ul v-if="hasErros" class="mt-2 mb-4 text-red-400 text-xl">
+    <ul v-if="hasErros" class="mt-1 text-red-400 text-xl">
         <li v-for="erro in props.erros" :key="erro">
             - {{ erro }}
         </li>
