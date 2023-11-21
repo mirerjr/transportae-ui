@@ -1,14 +1,12 @@
-import axios from 'axios';
-
-const API_HOST = import.meta.env.VITE_API_HOST;
+import apiConsumer from './api-consumer';
 
 async function logar(usuario) {
-    try {
-        const resposta = await axios.post(`${API_HOST}/auth/login`, usuario);
-
-    } catch (erro) {
-        console.log("Erro", erro?.response?.data ?? erro);
-    }
+    const config = apiConsumer.configuracao;
+    config.metodo = 'post';
+    config.endpoint = '/auth/login';
+    config.conteudo = usuario;
+        
+   return await apiConsumer.enviar(config);
 }
 
 export default {
