@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { ErroPadrao, ErroPrimeiroAcesso, ErroValidacao} from '../utils/erros';
+import { useUsuarioStore } from '../stores/usuario-store';
 
 const API_HOST = import.meta.env.VITE_API_HOST;
+const usuarioStore = useUsuarioStore();
 
 const getUrlCompleta = (endpoint) => `${API_HOST}${endpoint}`;
 
@@ -12,9 +14,14 @@ const configuracao = {
 };
 
 async function enviar(config) {
+    const tokenHeader = getTokenHeader();
+
     try {
         const url = getUrlCompleta(config.endpoint);
-        const resposta = await axios[config.metodo](url, config.conteudo);
+
+        const resposta = await axios[config.metodo](url, config.conteudo, {
+            headers: tokenHeader
+        });
 
         return resposta
 
@@ -22,6 +29,14 @@ async function enviar(config) {
         console.log("Ocorreu um erro ao enviar a requisição", config, erro);
         handleErro(erro?.response?.data ?? erro);
     }
+}
+
+function getTokenHeader() {
+    const token = usuarioStore.token ?? usuarioStore.tokenTemporario;
+
+    return token 
+        ? { Authorization: `Bearer ${token}` }
+        : null;
 }
 
 function handleErro(erro) {
@@ -34,7 +49,7 @@ function handleErro(erro) {
     }
 
     if (isPrimeiroAcesso) {
-        throw new ErroPrimeiroAcesso("Para poder continuar, por favor altere a sua senha");
+        throw new ErroPrimeiroAcesso("Para poder continuar, por favor altere a sua senha", erro.token);
     }    
 
     if (hasCamposInvalidos) {

@@ -15,9 +15,10 @@ class ErroValidacao extends Error {
 }
 
 class ErroPrimeiroAcesso extends Error {
-    constructor(message) {
+    constructor(message, token) {
         super(message);
         this.name = "ErroPrimeiroAcesso"
+        this.token = token
     }
 }
 

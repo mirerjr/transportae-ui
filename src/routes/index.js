@@ -8,7 +8,13 @@ export const routes = [
         component: () => import("../views/Login.vue"),
     },
     {
-        path: "/home",
+        path: "/alterar-senha",
+        name: "senha",
+        meta: { layout: 'LayoutLogo'},
+        component: () => import("../views/AlterarSenha.vue"),
+    },
+    {
+        path: "/",
         name: "home",
         meta: { layout: 'LayoutPrincipal' },
         component: () => import("../views/Home.vue"),

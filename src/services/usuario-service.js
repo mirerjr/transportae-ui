@@ -9,6 +9,16 @@ async function logar(usuario) {
    return await apiConsumer.enviar(config);
 }
 
+async function alterarSenha(form) {
+    const config = apiConsumer.configuracao;
+    config.metodo = 'patch';
+    config.endpoint = '/usuarios/senha';
+    config.conteudo = form;
+
+    return await apiConsumer.enviar(config);
+}
+
 export default {
-    logar
+    logar,
+    alterarSenha,
 }

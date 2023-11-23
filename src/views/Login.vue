@@ -50,6 +50,10 @@ import BaseInput from '../components/form/BaseInput.vue';
 import BaseBtn from '../components/form/BaseBtn.vue';
 import BaseCard from '../components/BaseCard.vue';
 import usuarioService from '../services/usuario-service'; 
+import { router } from '../routes';
+import { useUsuarioStore } from '../stores/usuario-store';
+
+const usuarioStore = useUsuarioStore();
 
 const isCarregando = ref(false);
 const msgErro = ref("");
@@ -65,29 +69,26 @@ let errosUsuario = reactive({
 })
 
 async function logar() {
-    let resposta;
+    isCarregando.value = true;
+    limparErros();   
 
-    try {
-        msgErro.value = "";
-        isCarregando.value = true;
-        resposta = await usuarioService.logar(usuario);    
+    try {        
+        const resposta = await usuarioService.logar(usuario);
+        const token = resposta?.data?.token;
+
+        if (!token) throw new Error("Erro ao obter as informações de autenticação");
+
+        usuarioStore.setToken(token);
+        router.push("/");
         
-    } catch (erro) {
-        for (const campo in errosUsuario) {
-            errosUsuario[campo] = [];
-        }
-        
+    } catch (erro) {       
         if (erro instanceof ErroPrimeiroAcesso) {
-            //TODO: Redirecionar para tela de troca de senha
+            handleErroPrimeiroAcesso(erro);
             return;
         }
 
         if (erro instanceof ErroValidacao) {
-            for (const erroCampo of erro.campos) {
-                if (errosUsuario[erroCampo.campo]) {
-                    errosUsuario[erroCampo.campo].push(erroCampo.mensagem);
-                }            
-            }
+            handleErroValidacao(erro);
             return;
         }
 
@@ -95,6 +96,31 @@ async function logar() {
 
     } finally {
         isCarregando.value = false;
+    }
+    
+}
+
+function limparErros() {
+    msgErro.value = "";
+
+    for (const campo in errosUsuario) {
+        errosUsuario[campo] = [];
+    }
+}
+
+function handleErroPrimeiroAcesso(erro) {
+    usuarioStore.tokenTemporario = erro.token; 
+    usuarioStore.email = usuario.email;
+    usuarioStore.senha = usuario.senha;
+
+    router.push("/alterar-senha");
+}
+
+function handleErroValidacao(erro) {
+    for (const erroCampo of erro.campos) {
+        if (errosUsuario[erroCampo.campo]) {
+            errosUsuario[erroCampo.campo].push(erroCampo.mensagem);
+        }            
     }
 }
 </script>
