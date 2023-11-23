@@ -1,6 +1,13 @@
 <template>
     <component :is="layoutAtual || 'div'">
-        <router-view />
+        <router-view v-slot="{ Component }">
+            <transition
+                enter-from-class="translate-x-[100%] opacity-0"
+                enter-active-class="transition duration-300"
+            >
+                <component :is="Component" :key="$route.path" />
+            </transition>
+        </router-view>
     </component>
 </template>
 
