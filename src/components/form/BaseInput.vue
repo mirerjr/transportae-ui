@@ -7,6 +7,7 @@
         :name="props.nome"
         :placeholder="props.placeholder ?? props.nome"
         :value="props.modelValue"
+        :autocomplete="props.autocomplete"
         @input="atualizarValorInput"
         :class="hasErros 
             ? 'border-red-400 text-red-400 focus:border-red-400 focus:outline-red-400 focus:ring-red-400'
@@ -40,6 +41,10 @@ const props = defineProps({
     erros: {
         type: Array,
         default: [],
+    },
+    autocomplete: {
+        type: String,
+        default: ""
     },
     modelValue: {
         required: true

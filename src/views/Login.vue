@@ -10,17 +10,19 @@
             <form class="font-gudea w-96">
                 <div class="flex flex-col text-2xl mb-4">
                     <BaseInput
-                        v-model="usuario.email"
                         nome="Email" 
                         tipo="email"
+                        autocomplete="username"
+                        v-model="usuario.email"
                         :erros="errosUsuario.email"
                     />
                 </div>
                 <div class="flex flex-col text-2xl mb-8">
                     <BaseInput
-                        v-model="usuario.senha"
                         nome="Senha"
                         tipo="password"
+                        autocomplete="current-password"
+                        v-model="usuario.senha"
                         :erros="errosUsuario.senha"
                     />
                 </div>
