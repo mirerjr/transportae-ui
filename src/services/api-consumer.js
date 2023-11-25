@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { ErroPadrao, ErroPrimeiroAcesso, ErroValidacao} from '../utils/erros';
-import { useUsuarioStore } from '../stores/usuario-store';
 
 const API_HOST = import.meta.env.VITE_API_HOST;
-const usuarioStore = useUsuarioStore();
 
 const getUrlCompleta = (endpoint) => `${API_HOST}${endpoint}`;
 
@@ -14,14 +12,9 @@ const configuracao = {
 };
 
 async function enviar(config) {
-    const tokenHeader = getTokenHeader();
-
     try {
         const url = getUrlCompleta(config.endpoint);
-
-        const resposta = await axios[config.metodo](url, config.conteudo, {
-            headers: tokenHeader
-        });
+        const resposta = await axios[config.metodo](url, config.conteudo);
 
         return resposta
 
@@ -35,14 +28,6 @@ async function enviar(config) {
         else        
             handleErroAxios(erroRequisicao)            
     }
-}
-
-function getTokenHeader() {
-    const token = usuarioStore.token ?? usuarioStore.tokenTemporario;
-
-    return token 
-        ? { Authorization: `Bearer ${token}` }
-        : null;
 }
 
 function handleErroAxios(erro) {
