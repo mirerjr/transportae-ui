@@ -12,7 +12,7 @@ async function logar(usuario) {
 async function alterarSenha(form) {
     const config = apiConsumer.configuracao;
     config.metodo = 'patch';
-    config.endpoint = '/usuarios/senha';
+    config.endpoint = '/auth/senha';
     config.conteudo = form;
 
     return await apiConsumer.enviar(config);
