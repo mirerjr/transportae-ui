@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import { PhUser, PhSignIn, PhCircleNotch } from '@phosphor-icons/vue';
 import { ErroPrimeiroAcesso, ErroValidacao } from '../utils/erros';
 import BaseInput from '../components/form/BaseInput.vue';
@@ -61,11 +61,16 @@ const msgErro = ref("");
 let usuario = reactive({
     email: "",
     senha: "",
-})
+});
 
 let errosUsuario = reactive({
     email: [],
     senha: [],
+});
+
+onMounted(() => {
+    usuarioStore.limparToken();
+    usuarioStore.limparCredenciais();
 })
 
 async function logar() {
