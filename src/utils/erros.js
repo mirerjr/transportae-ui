@@ -1,7 +1,8 @@
 class ErroPadrao extends Error {
-    constructor(message) {
+    constructor(message, codigoStatus) {
         super(message);
         this.name = "ErroPadrao"
+        this.codigoStatus = codigoStatus
     }
 }
 

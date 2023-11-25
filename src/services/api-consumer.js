@@ -27,7 +27,13 @@ async function enviar(config) {
 
     } catch (erro) {
         console.log("Ocorreu um erro ao enviar a requisição", config, erro);
-        handleErro(erro?.response?.data ?? erro);
+        
+        const erroRequisicao = erro?.response?.data
+        
+        if (!erroRequisicao)
+            throw new Error("Erro não identificado. Por favor, contate os administradores");
+        else        
+            handleErroAxios(erroRequisicao)            
     }
 }
 
@@ -39,15 +45,11 @@ function getTokenHeader() {
         : null;
 }
 
-function handleErro(erro) {
+function handleErroAxios(erro) {
     const isPrimeiroAcesso = erro?.primeiroAcesso;
-    const isErroMapeado = erro?.codigoStatus || isPrimeiroAcesso;
+    const isErroMapeado = erro?.codigoStatus;
     const hasCamposInvalidos = erro?.camposInvalidos?.length > 0;
     
-    if (!erro || !isErroMapeado) {
-        throw new Error("Erro não identificado. Por favor, contate os administradores");
-    }
-
     if (isPrimeiroAcesso) {
         throw new ErroPrimeiroAcesso("Para poder continuar, por favor altere a sua senha", erro.token);
     }    
@@ -57,7 +59,7 @@ function handleErro(erro) {
     }
 
     if (isErroMapeado) {
-        throw new ErroPadrao(erro.mensagem);
+        throw new ErroPadrao(erro.mensagem, erro.codigoStatus);
     }
     
     throw new Error("Erro não identificado. Por favor, contate os administradores");        
