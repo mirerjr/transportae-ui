@@ -5,7 +5,7 @@ export default function axiosInterceptor() {
     return function () {
         axios.interceptors.request.use(request => {
             const usuarioStore = useUsuarioStore();
-            const token = usuarioStore.token ?? usuarioStore.tokenTemporario;
+            const token = usuarioStore.getToken() ?? usuarioStore.tokenTemporario;
         
             if (token) {
                 request.headers.Authorization = `Bearer ${token}`;

@@ -1,4 +1,12 @@
 import apiConsumer from './api-consumer';
+import { useUsuarioStore } from '../stores/usuario-store';
+
+function isUsuarioLogado() {
+    const usuarioStore = useUsuarioStore();
+    const token = usuarioStore.getToken() || usuarioStore.tokenTemporario;
+
+    return token != undefined && token != null && token != '';
+}
 
 async function logar(usuario) {
     const config = apiConsumer.configuracao;
@@ -19,6 +27,7 @@ async function alterarSenha(form) {
 }
 
 export default {
+    isUsuarioLogado,
     logar,
     alterarSenha,
 }

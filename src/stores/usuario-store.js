@@ -5,13 +5,16 @@ export const useUsuarioStore = defineStore('usuario', () => {
     const email = ref("");
     const senha = ref("");
     
-    const token = computed(() => JSON.parse(localStorage.getItem('transportae_token')));
     const tokenTemporario = ref("");
 
     function limparCredenciais() {
         tokenTemporario.value = "";
         email.value = "";
         senha.value = "";
+    }
+
+    function getToken() {
+        return JSON.parse(localStorage.getItem('transportae_token'));
     }
 
     function setToken(novoToken) {
@@ -22,5 +25,5 @@ export const useUsuarioStore = defineStore('usuario', () => {
         localStorage.removeItem('transportae_token');
     }
 
-    return { email, senha, token, tokenTemporario, setToken, limparToken, limparCredenciais };
+    return { email, senha, tokenTemporario, setToken, getToken, limparToken, limparCredenciais };
 }); 

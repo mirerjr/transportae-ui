@@ -4,9 +4,12 @@ import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { router } from './routes/index';
 import axiosInterceptor from './utils/axios-interceptor'
+import { beforeEachGuard } from './routes/route-guard';
 
 const pinia = createPinia();
 const app = createApp(App);
+
+router.beforeEach(beforeEachGuard);
 
 app.use(pinia);
 app.use(router);
