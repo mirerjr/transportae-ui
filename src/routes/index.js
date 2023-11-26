@@ -18,7 +18,13 @@ export const routes = [
         name: "home",
         meta: { layout: 'LayoutPrincipal' },
         component: () => import("../views/Home.vue"),
-    }
+    },
+    {
+        path: "/perfil",
+        name: "perfil",
+        meta: { layout: 'LayoutPrincipal'},
+        component: () => import ("../views/Perfil.vue"),
+    },
 ];
 
 export const router = createRouter({

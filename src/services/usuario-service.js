@@ -26,8 +26,26 @@ async function alterarSenha(form) {
     return await apiConsumer.enviar(config);
 }
 
+async function getUsuario(id) {
+    const config = apiConsumer.configuracao;
+    config.metodo = 'get';
+    config.endpoint = `/usuarios/${id}`;
+
+    return await apiConsumer.enviar(config);
+}
+
+async function getUsuarioLogado() {
+    const config = apiConsumer.configuracao;
+    config.metodo = 'get';
+    config.endpoint = '/usuarios/logado';
+
+    return await apiConsumer.enviar(config);
+}
+
 export default {
     isUsuarioLogado,
     logar,
     alterarSenha,
+    getUsuario,
+    getUsuarioLogado,
 }

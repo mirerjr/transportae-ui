@@ -84,8 +84,8 @@ async function logar() {
         if (!token) throw new Error("Erro ao obter as informações de autenticação");
 
         usuarioStore.setToken(token);
-        router.push("/");
-        
+        router.push("/perfil");            
+
     } catch (erro) {       
         if (erro instanceof ErroPrimeiroAcesso) {
             handleErroPrimeiroAcesso(erro);
@@ -129,4 +129,3 @@ function handleErroValidacao(erro) {
     }
 }
 </script>
-
