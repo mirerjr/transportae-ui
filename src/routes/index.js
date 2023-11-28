@@ -17,7 +17,7 @@ export const routes = [
         path: "/",
         name: "home",
         meta: { layout: 'LayoutPrincipal' },
-        component: () => import("../views/Home.vue"),
+        component: () => import("../views/Usuarios.vue"),
     },
     {
         path: "/perfil",

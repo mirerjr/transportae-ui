@@ -12,43 +12,46 @@
                     <th scope="col" class="p-4 first:rounded-tl-xl last:rounded-tr-xl">
                         <input type="checkbox">
                     </th>
-                    <th scope="col" class="px-6 py-4 first:rounded-tl-xl last:rounded-tr-xl">Nome</th>
-                    <th scope="col" class="px-6 py-4 first:rounded-tl-xl last:rounded-tr-xl">Perfil</th>
-                    <th scope="col" class="px-6 py-4 first:rounded-tl-xl last:rounded-tr-xl">Matrícula</th>
-                    <th scope="col" class="px-6 py-4 first:rounded-tl-xl last:rounded-tr-xl">Telefone</th>
-                    <th scope="col" class="px-6 py-4 first:rounded-tl-xl last:rounded-tr-xl">Ação</th>
+                    <th
+                        scope="col"
+                        v-for="coluna in props.colunas"
+                        :key="coluna"
+                        class="px-6 py-4 first:rounded-tl-xl last:rounded-tr-xl"
+                    >
+                        {{ coluna }}
+                    </th>
                 </tr>
             </thead>
             <tbody class="font-arimo text-gray-700">
-                <tr class="border-gray-100 last:border-none even:bg-gray-100 even:bg-opacity-20">
-                    <td class="w-4 p-4">
-                        <input type="checkbox">
-                    </td>
+                <tr
+                    v-if="props.carregando"
+                    class="border-gray-100 last:border-none even:bg-gray-100 even:bg-opacity-20"                
+                >
                     <td
-                        class="flex items-center px-6 py-4 whitespace-nowrap"
+                        v-for="coluna in props.colunas.length + 1"
+                        class="px-4 py-4"
                     >
-                        <div class="w-10 h-10 p-2 rounded-full bg-blue-100 font-bold text-center align-middle">
-                            M
+                        <div class="animate-pulse flex space-x-4">
+                            <div class="h-2.5 w-2/4 bg-gray-100 rounded"></div>
                         </div>
-                        <div class="ps-3">
-                            <div class="font-bold">Mirer Balbino de Andrade Junior</div>
-                            <div class="text-gray-600">mirer.rmj@gmail.com</div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4">ADMIN</td>
-                    <td class="px-6 py-4">007</td>
-                    <td class="px-6 py-4">(00) 0 0000-0000</td>
-                    <td class="px-6 py-4">
-                        <button class="flex items-center text-blue-500">
-                            <PhPencilSimple class="me-1" /> Editar
-                        </button>
                     </td>
                 </tr>
+                <slot v-else></slot>
             </tbody>
         </table>
     </div>
 </template>
 
 <script setup>
-import { PhPencilSimple } from '@phosphor-icons/vue';
+
+const props = defineProps({
+    colunas: {
+        type: Array,
+        default: [],
+    },
+    carregando: {
+        type: Boolean,
+        default: false,
+    }
+})
 </script>

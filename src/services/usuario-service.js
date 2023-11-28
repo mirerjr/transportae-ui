@@ -42,10 +42,19 @@ async function getUsuarioLogado() {
     return await apiConsumer.enviar(config);
 }
 
+async function listarUsuarios() {
+    const config = apiConsumer.configuracao;
+    config.metodo = 'get';
+    config.endpoint = '/usuarios';
+
+    return await apiConsumer.enviar(config);
+}
+
 export default {
     isUsuarioLogado,
     logar,
     alterarSenha,
     getUsuario,
     getUsuarioLogado,
+    listarUsuarios,
 }
