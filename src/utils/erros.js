@@ -23,8 +23,16 @@ class ErroPrimeiroAcesso extends Error {
     }
 }
 
+class ErroTokenExpirado extends Error {
+    constructor(message, token) {
+        super(message);
+        this.name = "ErroTokenExpirado"
+    }
+}
+
 export {
     ErroPadrao,
     ErroValidacao,
     ErroPrimeiroAcesso,
+    ErroTokenExpirado,
 }

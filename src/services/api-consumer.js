@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { ErroPadrao, ErroPrimeiroAcesso, ErroValidacao} from '../utils/erros';
+import { ErroPadrao, ErroPrimeiroAcesso, ErroValidacao, ErroTokenExpirado } from '../utils/erros';
+import { router } from '../routes/index';
 
 const API_HOST = import.meta.env.VITE_API_HOST;
 
@@ -34,6 +35,12 @@ function handleErroAxios(erro) {
     const isPrimeiroAcesso = erro?.primeiroAcesso;
     const isErroMapeado = erro?.codigoStatus;
     const hasCamposInvalidos = erro?.camposInvalidos?.length > 0;
+    const isTokenInvalido = erro?.titulo == "TOKEN_EXPIRADO" || erro?.titulo == "TOKEN_INVALIDO";
+
+    if (isTokenInvalido) {
+        router.push("login");
+        throw new ErroTokenExpirado("Tempo de acesso expirado. Por favor, faça o login novamente");
+    }
     
     if (isPrimeiroAcesso) {
         throw new ErroPrimeiroAcesso("Para poder continuar, por favor altere a sua senha", erro.token);
