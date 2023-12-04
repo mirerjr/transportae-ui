@@ -5,11 +5,11 @@
                 Usuários
             </template>
             <template #conteudo>
-                    <BaseTable :colunas="colunas" :carregando="isCarregando">
+                    <Tabela :colunas="colunas" :carregando="isCarregando">
                         <tr 
                             v-for="usuario in usuarios"
                             :key="usuario.nome"
-                            class="border-gray-100 last:border-none even:bg-gray-100 even:bg-opacity-20"
+                            class="border-gray-100 last:border-none even:bg-gray-100 even:bg-opacity-10"
                         >
                             <td class="w-4 p-4">
                                 <input type="checkbox">
@@ -30,7 +30,7 @@
                                 </button>
                             </td>
                         </tr>                    
-                    </BaseTable>
+                    </Tabela>
             </template>
         </BaseCard>
     </div>
@@ -39,7 +39,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { PhPencilSimple } from '@phosphor-icons/vue';
-import BaseTable from "../components/table/BaseTable.vue";
+import Tabela from "../components/table/Tabela.vue";
 import BaseCard from "../components/BaseCard.vue";
 import ImgUsuario from "../components/ImgUsuario.vue";
 import usuarioService from "../services/usuario-service";
@@ -53,7 +53,7 @@ onMounted(async () => {
 
     try {
         const resposta = await usuarioService.listarUsuarios();
-        usuarios.value = resposta.data;
+        usuarios.value = resposta.data.content;
 
     } catch (erro) {
         console.log(erro);
