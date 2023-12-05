@@ -35,7 +35,13 @@
                                     <PhPencilSimple class="me-1" /> Editar
                                 </button>
                             </td>
-                        </tr>                    
+                        </tr>
+                        <tr 
+                            v-show="usuarios.length == 0"
+                            class="border-gray-100 last:border-none even:bg-gray-100 even:bg-opacity-10"
+                        >
+                            <td colspan="6" align="center" class="px-6 py-4">Nenhum usuário foi encontrado</td>
+                        </tr>
                     </Tabela>
                     <div class="mt-4">
                         <Paginacao
