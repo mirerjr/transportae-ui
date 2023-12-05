@@ -31,29 +31,46 @@
                             </td>
                         </tr>                    
                     </Tabela>
+                    <div class="mt-4">
+                        <Paginacao
+                            v-if="usuarios?.length > 0"
+                            :total-paginas="paginacao.totalPaginas"
+                            :itens-por-pagina="paginacao.limitePorPagina"
+                            :pagina-atual="paginacao.paginaAtual"
+                            :total-paginas-visiveis="5"
+                            @alterar-pagina="(pagina) => listarUsuarios(pagina)"
+                        />
+                    </div>
             </template>
         </BaseCard>
     </div>
 </template>
   
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { PhPencilSimple } from '@phosphor-icons/vue';
 import Tabela from "../components/table/Tabela.vue";
 import BaseCard from "../components/BaseCard.vue";
+import Paginacao from "../components/table/Paginacao.vue";
 import ImgUsuario from "../components/ImgUsuario.vue";
 import usuarioService from "../services/usuario-service";
 
 const colunas = ref(['Nome', 'Perfil', 'Matrícula', 'Telefone', 'Ação']);
-const usuarios = ref();
+const usuarios = ref([]);
 const isCarregando = ref(false);
+
+const paginacao = reactive({
+    paginaAtual: 0,
+    totalPaginas: 0,
+    limitePorPagina: 0,
+})
+
 
 onMounted(async () => {
     isCarregando.value = true;
 
     try {
-        const resposta = await usuarioService.listarUsuarios();
-        usuarios.value = resposta.data.content;
+        await listarUsuarios();
 
     } catch (erro) {
         console.log(erro);
@@ -62,4 +79,14 @@ onMounted(async () => {
         isCarregando.value = false;
     }
 });
+
+async function listarUsuarios(pagina) {
+    const resposta = await usuarioService.listarUsuarios(pagina);
+    const dados = resposta.data;
+
+    usuarios.value = dados.content;
+    paginacao.paginaAtual = dados.number + 1;
+    paginacao.totalPaginas = dados.totalPages;
+    paginacao.limitePorPagina = dados.numberOfElements;
+}
 </script>
