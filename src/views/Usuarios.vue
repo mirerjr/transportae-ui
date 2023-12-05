@@ -8,6 +8,7 @@
                     <div class="flex justify-end mb-2">
                         <InputPesquisa 
                             placeholder="Pesquisar Usuário" 
+                            @update:model-value="pesquisarUsuario"
                         />
                     </div>
                     <Tabela :colunas="colunas" :carregando="isCarregando">
@@ -86,13 +87,17 @@ onMounted(async () => {
     }
 });
 
-async function listarUsuarios(pagina) {
-    const resposta = await usuarioService.listarUsuarios(pagina);
+async function listarUsuarios(pagina, termoPesquisa) {
+    const resposta = await usuarioService.listarUsuarios(pagina, termoPesquisa);
     const dados = resposta.data;
 
     usuarios.value = dados.content;
     paginacao.paginaAtual = dados.number + 1;
     paginacao.totalPaginas = dados.totalPages;
     paginacao.limitePorPagina = dados.numberOfElements;
+}
+
+async function pesquisarUsuario(termo) {
+    await listarUsuarios(paginacao.paginaAtual, termo)
 }
 </script>
