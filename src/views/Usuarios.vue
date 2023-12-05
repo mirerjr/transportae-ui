@@ -5,6 +5,11 @@
                 Usuários
             </template>
             <template #conteudo>
+                    <div class="flex justify-end mb-2">
+                        <InputPesquisa 
+                            placeholder="Pesquisar Usuário" 
+                        />
+                    </div>
                     <Tabela :colunas="colunas" :carregando="isCarregando">
                         <tr 
                             v-for="usuario in usuarios"
@@ -54,6 +59,7 @@ import BaseCard from "../components/BaseCard.vue";
 import Paginacao from "../components/table/Paginacao.vue";
 import ImgUsuario from "../components/ImgUsuario.vue";
 import usuarioService from "../services/usuario-service";
+import InputPesquisa from "../components/table/InputPesquisa.vue";
 
 const colunas = ref(['Nome', 'Perfil', 'Matrícula', 'Telefone', 'Ação']);
 const usuarios = ref([]);
