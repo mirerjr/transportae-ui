@@ -76,7 +76,7 @@ onMounted(async () => {
     isCarregando.value = true;
 
     try {
-        await listarUsuarios();
+        await listarUsuarios(1);
 
     } catch (erro) {
         console.log(erro);
