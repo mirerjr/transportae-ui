@@ -20,7 +20,8 @@ export const routes = [
         component: () => import("../views/Usuarios.vue"),
     },
     {
-        path: "/perfil",
+        path: "/perfil/:id?",
+        props: true,
         name: "perfil",
         meta: { layout: 'LayoutPrincipal'},
         component: () => import ("../views/Perfil.vue"),

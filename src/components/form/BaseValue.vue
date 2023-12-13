@@ -27,7 +27,7 @@
 <script setup>
 const props = defineProps({
     campo: { type: String }, 
-    valor: { type: Object },
+    valor: { required: true },
     espacamento: {
         type: String,
         default: "normal"

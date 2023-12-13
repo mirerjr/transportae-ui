@@ -31,8 +31,11 @@
                             <td class="px-6 py-4">{{ usuario.matricula ?? 'N/D' }}</td>
                             <td class="px-6 py-4">{{ usuario.telefone ?? 'N/D' }}</td>
                             <td class="px-6 py-4">
-                                <button class="flex items-center text-blue-500">
-                                    <PhPencilSimple class="me-1" /> Editar
+                                <button
+                                    @click="$router.push(`/perfil/${usuario.id}`)"
+                                    class="flex items-center text-blue-500"
+                                >
+                                    <PhPencilSimple class="me-1" /> Exibir
                                 </button>
                             </td>
                         </tr>

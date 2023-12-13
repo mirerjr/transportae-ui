@@ -47,12 +47,12 @@ import BaseCard from '../components/BaseCard.vue';
 import BaseValue from '../components/form/BaseValue.vue';
 import { PhUser } from '@phosphor-icons/vue';
 
-const props = defineProps(['usuarioId']);
+const props = defineProps(['id']);
 
 const usuario = ref({});
 
 onMounted(async () => {
-    await getUsuario(props.usuarioId);
+    await getUsuario(props.id);
 });
 
 async function getUsuario(id) {
