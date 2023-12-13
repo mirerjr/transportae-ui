@@ -32,6 +32,7 @@
             <BaseBtn
                 :disabled="isCarregando"
                 class="text-2xl font-gudea"
+                variante-tamanho="xl"
                 @click="logar()"
             >
                     <PhCircleNotch v-if="isCarregando" class="animate-spin" /> 
