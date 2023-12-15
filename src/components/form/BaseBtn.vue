@@ -7,7 +7,7 @@
             [variantesCor[props.varianteCor]]: !props.disabled,
             [variantesTamanho[props.varianteTamanho]]: props.varianteTamanho,
         }"
-        class="w-full font-gudea inline-flex justify-center items-center border-none rounded-lg focus:outline-none">
+        class="w-full font-gudea inline-flex justify-center items-center rounded-lg focus:outline-none">
         <slot></slot>
     </button>
 </template>
@@ -29,8 +29,8 @@ const props = defineProps({
 
 const variantesCor = {
     blue: 'bg-blue-200 hover:bg-blue-300 text-blue-900 focus:ring-blue-400',
-    green: 'bg-green-200 hover:bg-green-300 text-green-900 focus:ring-green-400',
-    red: 'bg-red-200 hover:bg-red-300 text-red-900 focus:ring-red-400',
+    green: 'bg-green-100 hover:bg-green-300 text-green-900 focus:ring-green-400',
+    red: 'bg-red-100 hover:bg-red-300 text-red-900 focus:ring-red-400',
 }
 
 const variantesTamanho = {

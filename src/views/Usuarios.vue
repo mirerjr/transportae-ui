@@ -4,12 +4,26 @@
             <template #cabecalho>
                 Usuários
             </template>
+            <template #cabecalho-btn>
+                <BaseBtn
+                    @click="$router.push('/cadastrar-usuario')"
+                    variante-tamanho="sm"
+                >
+                    <PhPlus class="mr-0.5" /> Adicionar
+                </BaseBtn>
+            </template>
             <template #conteudo>
-                    <div class="flex justify-end mb-2">
-                        <InputPesquisa 
-                            placeholder="Pesquisar Usuário" 
-                            @update:model-value="pesquisarUsuario"
-                        />
+                    <div class="flex justify-between mb-2">
+                        <div>
+                            <!-- Opções -->
+                        </div>
+                        <div class="flex justify-end">
+                            <!-- TODO: Corrigir ícone para ser absolute apenas em relação ao input -->
+                            <InputPesquisa 
+                                placeholder="Pesquisar Usuário" 
+                                @update:model-value="pesquisarUsuario"
+                            />
+                        </div>
                     </div>
                     <Tabela :colunas="colunas" :carregando="isCarregando">
                         <tr 
@@ -63,13 +77,14 @@
   
 <script setup>
 import { ref, reactive, onMounted } from "vue";
-import { PhPencilSimple } from '@phosphor-icons/vue';
+import { PhPencilSimple, PhPlus } from '@phosphor-icons/vue';
 import Tabela from "../components/table/Tabela.vue";
 import BaseCard from "../components/BaseCard.vue";
 import Paginacao from "../components/table/Paginacao.vue";
 import ImgUsuario from "../components/ImgUsuario.vue";
 import usuarioService from "../services/usuario-service";
 import InputPesquisa from "../components/table/InputPesquisa.vue";
+import BaseBtn from "../components/form/BaseBtn.vue";
 
 const colunas = ref(['Nome', 'Perfil', 'Matrícula', 'Telefone', 'Ação']);
 const usuarios = ref([]);

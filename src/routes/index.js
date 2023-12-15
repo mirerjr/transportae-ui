@@ -26,6 +26,12 @@ export const routes = [
         meta: { layout: 'LayoutPrincipal'},
         component: () => import ("../views/Perfil.vue"),
     },
+    {
+        path: "/cadastrar-usuario",
+        name: "cadastrar-usuario",
+        meta: { layout: 'LayoutPrincipal'},
+        component: () => import ("../views/NovoUsuario.vue"),
+    }
 ];
 
 export const router = createRouter({
