@@ -57,7 +57,14 @@
     <div v-if="props.iconeFinal" class="absolute translate-y-3 translate-x-2.5 mt-0.5 ">
         <component :is="props.iconeFinal" />
     </div>
-    <ul v-if="hasErros" class="mt-1 text-red-400 text-xl">
+    <ul
+        v-if="hasErros"
+        class="mt-1 text-red-400"
+        :class="{
+            'text-xl': props.variante == 'v1',
+            'text-md': props.variante == 'v2',
+        }"
+    >
         <li v-for="erro in props.erros" :key="erro">
             - {{ erro }}
         </li>
