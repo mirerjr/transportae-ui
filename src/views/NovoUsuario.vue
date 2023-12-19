@@ -11,6 +11,9 @@
                 </h3>
             </header>
             <slot name="conteudo">
+                <div class="max-w-sm mb-2">
+                    <span class="break-words text-xl font-arimo text-red-400">{{ msgErro }}</span>
+                </div>
                 <form class="w-full flex flex-col items-center" autocomplete="off">
                     <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <BaseInput 
@@ -68,22 +71,22 @@
                             nome="Endereço"
                             placeholder="Endereço"
                             variante="v2"
-                            v-model="usuario.endereco.descricao"
-                            :erro="errosUsuario.endereco.descricao"
+                            v-model="endereco.descricao"
+                            :erros="errosEndereco.descricao"
                         />
                         <BaseInput
                             nome="Número"
                             placeholder="Número"
                             variante="v2"
-                            v-model="usuario.endereco.numero"
-                            :erro="errosUsuario.endereco.numero"
+                            v-model="endereco.numero"
+                            :erros="errosEndereco.numero"
                         />
                         <BaseInput
                             nome="Bairro"
                             placeholder="Bairro"
                             variante="v2"
-                            v-model="usuario.endereco.bairro"
-                            :erro="errosUsuario.endereco.bairro"
+                            v-model="endereco.bairro"
+                            :erros="errosEndereco.bairro"
                         />
                         <BaseInput
                             nome="Cidade"
@@ -91,23 +94,25 @@
                             variante="v2"
                             tipo="select"
                             :opcoes="cidades"
-                            v-model="usuario.endereco.cidade"
-                            :erro="errosUsuario.endereco.cidade"
+                            v-model="endereco.cidade"
+                            :erros="errosEndereco.cidade"
                         />
                         <BaseInput
                             nome="Complemento"
                             placeholder="Complemento"
                             variante="v2"
-                            v-model="usuario.endereco.complemento"
-                            :erro="errosUsuario.endereco.complemento"
+                            v-model="endereco.complemento"
+                            :erros="errosEndereco.complemento"
                         />
                         <BaseInput
                             nome="CEP"
                             placeholder="CEP"
                             variante="v2"
-                            v-model="usuario.endereco.cep"
-                            :erro="errosUsuario.endereco.cep"
+                            v-model="endereco.cep"
+                            :erros="errosEndereco.cep"
                         />
+                    </div>
+                    <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
                         <BaseBtn 
                             class="mt-4 lg:w-2/3"
                             variante-tamanho="md"
@@ -142,13 +147,12 @@ import BaseInput from '../components/form/BaseInput.vue';
 import BaseSwitch from '../components/form/BaseSwitch.vue';
 import cidades from '../utils/cidades';
 import usuarioService from '../services/usuario-service';
-import apiConsumer from '../services/api-consumer';
-import { PhPlus, PhUserPlus, PhArrowLeft } from '@phosphor-icons/vue';
+import { PhPlus, PhUserPlus, PhArrowLeft, PhCircleNotch } from '@phosphor-icons/vue';
 import { ref, reactive } from 'vue';
 import { router } from '../routes';
 import { ErroValidacao } from '../utils/erros';
 
-const usuario = reactive({
+const usuario  = reactive({
     nome: '',
     email: '',
     cpf: '',
@@ -156,25 +160,20 @@ const usuario = reactive({
     telefone: '',
     dataNascimento: '',
     perfil: 'ALUNO',
+    endereco: null
 });
 
-const errosUsuario = reactive({
-    nome: [],
-    email: [],
-    cpf: [],
-    matricula: [],
-    telefone: [],
-    dataNascimento: [],
-    perfil: [],
-    endereco: {
-        rua: [],
-        numero: [],
-        bairro: [],
-        cidade: [],
-        complemento: [],
-        cep: []
-    }
+const endereco = reactive({
+    descricao: '',
+    numero: '',
+    bairro: '',
+    cidade: '',
+    complemento: '',
+    cep: ''
 });
+
+const errosUsuario = ref(setErrosUsuario(usuario));
+const errosEndereco = ref(setErrosEndereco(endereco));
 
 const isCarregando = ref(false);
 const msgErro = ref("");
@@ -195,13 +194,12 @@ async function cadastrar() {
 
     } catch (erro) {
         console.log(erro);
+        msgErro.value = erro.message;
 
         if (erro instanceof ErroValidacao) {
             handleErroValidacao(erro);
             return;
-        }
-
-        msgErro.value = erro.message;
+        }        
 
     } finally {
         isCarregando.value = false;
@@ -210,27 +208,61 @@ async function cadastrar() {
 
 function handleErroValidacao(erro) {
     for (const { campo, mensagem } of erro.campos) {
-        if (errosUsuario[campo]) {
-            errosUsuario[campo].push(mensagem);
+        const erroAninhado = campo.split('.')
+
+        if (erroAninhado.length > 1) {
+            const [campoPai, campoFilho] = erroAninhado;
+
+            if (campoPai == 'endereco' && errosEndereco.value[campoFilho] != null) {
+                errosEndereco.value[campoFilho].push(mensagem);
+            }
+
         } else {
-            errosUsuario.endereco[campo].push(mensagem);
+            if (errosUsuario.value[campo] != null) {
+                errosUsuario.value[campo].push(mensagem);
+            }
         }
     }
+}
+
+function handleErroAninhados(erroAninhado, mensagem) {
+    const [campoPai, campoFilho] = erroAninhado;
+
+    if (errosUsuario.value[campoPai]) {
+        errosUsuario.value[campoPai][campoFilho] = [];
+        errosUsuario.value[campoPai][campoFilho].push(mensagem);
+    }
+}
+
+function setErrosUsuario(dadosUsuario) {
+    const erros = {};
+
+    for (const campo in dadosUsuario) {
+        const isCampoAninhado = typeof dadosUsuario[campo] === 'object' && dadosUsuario[campo] !== null;
+
+        if (isCampoAninhado) {
+            erros[campo] = setErrosUsuario(dadosUsuario[campo]);
+        } else {
+            erros[campo] = [];
+        }
+    }
+
+    return erros;
+}
+
+function setErrosEndereco(dadosEndereco) {
+    const erros = {};
+
+    for (const campo in dadosEndereco) {
+        erros[campo] = [];
+    }
+
+    return erros;
 }
 
 function limparErros() {
     msgErro.value = "";
-
-    for (const campo in errosUsuario) {
-        if (campo instanceof Array) {
-            for (const subCampo in campo) {
-                errosUsuario[campo][subCampo] = [];
-            }
-
-        } else {
-            errosUsuario[campo] = [];
-        }
-    }
+    errosUsuario.value =  setErrosUsuario(usuario);
+    errosEndereco.value =  setErrosEndereco(endereco);
 }
-
 </script>

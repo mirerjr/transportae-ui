@@ -50,6 +50,15 @@ async function listarUsuarios(pagina = 1, pesquisa = "") {
     return await apiConsumer.enviar(config);
 }
 
+async function cadastrarUsuario(usuario) {
+    const config = apiConsumer.configuracao;
+    config.metodo = 'post';
+    config.endpoint = '/usuarios';
+    config.conteudo = usuario;
+
+    return await apiConsumer.enviar(config);
+}
+
 export default {
     isUsuarioLogado,
     logar,
@@ -57,4 +66,5 @@ export default {
     getUsuario,
     getUsuarioLogado,
     listarUsuarios,
+    cadastrarUsuario,
 }
