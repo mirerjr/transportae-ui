@@ -12,14 +12,14 @@
         <div
             :id="props.nome"
             class="w-14 h-8 flex items-center rounded-full p-1 duration-100 cursor-pointer"
-            :class="{ 'bg-blue-300': isOpcaoDireita,
-                     'bg-gray-300': !isOpcaoDireita }"
-            :aria-checked="props.modelValue.toString()"
+            :class="{ 'bg-blue-300': opcaoSelecionada,
+                     'bg-gray-300': !opcaoSelecionada }"
+            :aria-checked="opcaoSelecionada"
             @click="alternarValor"
         >
             <div
             class="bg-white w-6 h-6 rounded-full shadow-md transform duration-100"
-            :class="{ 'translate-x-6': isOpcaoDireita }"
+            :class="{ 'translate-x-6': opcaoSelecionada }"
             ></div>
         </div>
         <label :for="props.nome" class="ml-2">{{ props.opcaoDireita }}</label>
@@ -33,24 +33,25 @@
 </template>
 
 <script setup>
-import { ref, computed, watchEffect } from 'vue';
+import { ref, computed } from 'vue';
 
 const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps({
     modelValue: {
-        required: true,
-        default: ""
+        required: false
     },
     opcaoEsquerda: {
-        defult: false,
+        type: String,
+        defult: "Não",
     },
     opcaoDireita: {
-        default: true
+        type: String,
+        default: "Sim",
     },
     nome: {
         type: String,
-        required: true
+        required: false
     },
     erros: {
         type: Array,
@@ -58,15 +59,11 @@ const props = defineProps({
     }
 });
 
-const isOpcaoDireita = computed(() => props.modelValue === props.opcaoDireita);
+const opcaoSelecionada = ref(false);
 const hasErros = computed(() => props.erros.length > 0);
 
 function alternarValor() {
-    if (props.modelValue === props.opcaoEsquerda) {
-        emit('update:modelValue', props.opcaoDireita);
-
-    } else {
-        emit('update:modelValue', props.opcaoEsquerda);
-    }
+    opcaoSelecionada.value = !opcaoSelecionada.value;
+    emit('update:modelValue', opcaoSelecionada.value);
 }
 </script>

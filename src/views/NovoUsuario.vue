@@ -59,11 +59,11 @@
                         <BaseSwitch
                             opcao-esquerda="Aluno"
                             opcao-direita="Motorista"
-                            v-model="usuario.perfil"
+                            @update:model-value="atualizarPerfil"
                             :erros="errosUsuario.perfil"
                         />
                     </div>
-                    <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
+                    <div v-show="usuario.perfil == 'ALUNO'" class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
                         <BaseInput
                             nome="Endereço"
                             placeholder="Endereço"
@@ -155,15 +155,7 @@ const usuario = reactive({
     matricula: '',
     telefone: '',
     dataNascimento: '',
-    perfil: 'Aluno',
-    endereco: {
-        rua: '',
-        numero: '',
-        bairro: '',
-        cidade: '',
-        complemento: '',
-        cep: ''
-    }
+    perfil: 'ALUNO',
 });
 
 const errosUsuario = reactive({
@@ -187,12 +179,16 @@ const errosUsuario = reactive({
 const isCarregando = ref(false);
 const msgErro = ref("");
 
+const atualizarPerfil = (opcao) => {
+    usuario.perfil = opcao ? 'MOTORISTA' : 'ALUNO';
+}
+
 async function cadastrar() {
     isCarregando.value = true;
     limparErros();
 
     try {
-        usuario.perfil = usuario.perfil.toUpperCase()
+        usuario.endereco = usuario.perfil == 'ALUNO' ? endereco : null;
         await usuarioService.cadastrarUsuario(usuario);
 
         router.back();
