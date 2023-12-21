@@ -37,6 +37,12 @@ export const routes = [
         name: "cadastrar-usuario",
         meta: { layout: 'LayoutPrincipal'},
         component: () => import ("../views/NovoUsuario.vue"),
+    },
+    {
+        path: "/instituicoes",
+        name: "instituicoes",
+        meta: { layout: 'LayoutPrincipal' },
+        component: () => import("../views/Instituicoes.vue"), 
     }
 ];
 

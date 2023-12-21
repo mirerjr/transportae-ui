@@ -10,7 +10,7 @@
                     Selecione uma das opções para começar.
                 </p> -->
                 <section class="w-fit mx-auto grid grid-cols-2 gap-4 justify-items-center sm:grid-cols-4 ">
-                    <CardBtn>
+                    <CardBtn @click="$router.push('/instituicoes')">
                         <PhBuildings weight="light" class="text-3xl" /> Instituições de Ensino
                     </CardBtn>
                     <CardBtn>
