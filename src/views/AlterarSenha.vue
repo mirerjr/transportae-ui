@@ -103,7 +103,7 @@ async function atualizarSenha() {
         usuarioStore.setToken(usuarioStore.tokenTemporario);
         usuarioStore.limparCredenciais();
         
-        router.push("/perfil");
+        router.push("/");
 
     } catch (erro) {
         if (erro instanceof ErroValidacao) {

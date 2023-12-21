@@ -17,6 +17,12 @@ export const routes = [
         path: "/",
         name: "home",
         meta: { layout: 'LayoutPrincipal' },
+        component: () => import("../views/home.vue"),
+    },
+    {
+        path: "/usuarios",
+        name: "usuarios",
+        meta: { layout: 'LayoutPrincipal' },
         component: () => import("../views/Usuarios.vue"),
     },
     {

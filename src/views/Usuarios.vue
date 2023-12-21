@@ -1,7 +1,8 @@
 <template>
-    <div>
-        <BaseCard class="mb-8">
+    <div class="grid grid-cols-1 gap-4 justify-items-center xl:gap-36">
+        <BaseCard class="w-full lg:w-3/4 xl:w-4/5">
             <template #cabecalho>
+                <PhUsers class="mr-2" />
                 Usuários
             </template>
             <template #cabecalho-btn>
@@ -77,7 +78,7 @@
   
 <script setup>
 import { ref, reactive, onMounted } from "vue";
-import { PhPencilSimple, PhPlus } from '@phosphor-icons/vue';
+import { PhPencilSimple, PhPlus, PhUsers } from '@phosphor-icons/vue';
 import Tabela from "../components/table/Tabela.vue";
 import BaseCard from "../components/BaseCard.vue";
 import Paginacao from "../components/table/Paginacao.vue";
