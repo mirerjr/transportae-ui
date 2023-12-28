@@ -95,7 +95,7 @@ const props = defineProps({
     },
     autocomplete: {
         type: String,
-        default: ""
+        default: "autocomplete-desabilitado"
     },
     modelValue: {
         required: true
