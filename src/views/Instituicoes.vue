@@ -37,7 +37,7 @@
                         <td class="px-6 py-4">{{ instituicao.tipoInstituicao ?? 'N/D' }}</td>
                         <td class="px-6 py-4">
                             <button
-                                @click="$router.push(`/instituicoes/${instituicao.id}`)"
+                                @click="$router.push(`/instituicao/${instituicao.id}`)"
                                 class="flex items-center text-blue-500"
                             >
                                 <PhPencilSimple class="me-1" /> Exibir
