@@ -19,12 +19,14 @@
         </label>
         <span>
             <slot name="valor">
-                {{ props.valor ?? 'N/D' }}
+                {{ hasValor ? props.valor : 'N/D' }}
             </slot>
         </span>
     </div>
 </template>
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
     campo: { type: String }, 
     valor: { required: true },
@@ -32,5 +34,9 @@ const props = defineProps({
         type: String,
         default: "normal"
     }
+});
+
+const hasValor = computed(() => {
+    return props.valor != null && props.valor != undefined && props.valor != '';
 });
 </script>
