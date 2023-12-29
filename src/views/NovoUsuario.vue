@@ -67,49 +67,9 @@
                         />
                     </div>
                     <div v-show="usuario.perfil == 'ALUNO'" class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
-                        <BaseInput
-                            nome="Endereço"
-                            placeholder="Endereço"
-                            variante="v2"
-                            v-model="endereco.descricao"
-                            :erros="errosEndereco.descricao"
-                        />
-                        <BaseInput
-                            nome="Número"
-                            placeholder="Número"
-                            variante="v2"
-                            v-model="endereco.numero"
-                            :erros="errosEndereco.numero"
-                        />
-                        <BaseInput
-                            nome="Bairro"
-                            placeholder="Bairro"
-                            variante="v2"
-                            v-model="endereco.bairro"
-                            :erros="errosEndereco.bairro"
-                        />
-                        <BaseInput
-                            nome="Cidade"
-                            placeholder="Cidade"
-                            variante="v2"
-                            tipo="select"
-                            :opcoes="cidades"
-                            v-model="endereco.cidade"
-                            :erros="errosEndereco.cidade"
-                        />
-                        <BaseInput
-                            nome="Complemento"
-                            placeholder="Complemento"
-                            variante="v2"
-                            v-model="endereco.complemento"
-                            :erros="errosEndereco.complemento"
-                        />
-                        <BaseInput
-                            nome="CEP"
-                            placeholder="CEP"
-                            variante="v2"
-                            v-model="endereco.cep"
-                            :erros="errosEndereco.cep"
+                        <EnderecoForm
+                            ref="enderecoForm"
+                            :erros="errosEndereco"
                         />
                     </div>
                     <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
@@ -145,12 +105,12 @@
 import BaseBtn from '../components/form/BaseBtn.vue';
 import BaseInput from '../components/form/BaseInput.vue';
 import BaseSwitch from '../components/form/BaseSwitch.vue';
-import cidades from '../utils/cidades';
 import usuarioService from '../services/usuario-service';
 import { PhPlus, PhUserPlus, PhArrowLeft, PhCircleNotch } from '@phosphor-icons/vue';
 import { ref, reactive } from 'vue';
 import { router } from '../routes';
 import { ErroValidacao } from '../utils/erros';
+import EnderecoForm from '../components/form/EnderecoForm.vue';
 
 const usuario  = reactive({
     nome: '',
@@ -163,17 +123,10 @@ const usuario  = reactive({
     endereco: null
 });
 
-const endereco = reactive({
-    descricao: '',
-    numero: '',
-    bairro: '',
-    cidade: '',
-    complemento: '',
-    cep: ''
-});
+const enderecoForm = ref(null);
+const errosEndereco = ref([]);
 
 const errosUsuario = ref(setErrosUsuario(usuario));
-const errosEndereco = ref(setErrosEndereco(endereco));
 
 const isCarregando = ref(false);
 const msgErro = ref("");
@@ -187,9 +140,11 @@ async function cadastrar() {
     limparErros();
 
     try {
-        usuario.endereco = usuario.perfil == 'ALUNO' ? endereco : null;
-        await usuarioService.cadastrarUsuario(usuario);
+        usuario.endereco = usuario.perfil == 'ALUNO' 
+            ? enderecoForm.value.endereco
+            : null;
 
+        await usuarioService.cadastrarUsuario(usuario);
         router.back();
 
     } catch (erro) {
@@ -207,30 +162,12 @@ async function cadastrar() {
 }
 
 function handleErroValidacao(erro) {
+    errosEndereco.value = erro.campos;
+
     for (const { campo, mensagem } of erro.campos) {
-        const erroAninhado = campo.split('.')
-
-        if (erroAninhado.length > 1) {
-            const [campoPai, campoFilho] = erroAninhado;
-
-            if (campoPai == 'endereco' && errosEndereco.value[campoFilho] != null) {
-                errosEndereco.value[campoFilho].push(mensagem);
-            }
-
-        } else {
-            if (errosUsuario.value[campo] != null) {
-                errosUsuario.value[campo].push(mensagem);
-            }
+        if (errosUsuario.value[campo] != null) {
+            errosUsuario.value[campo].push(mensagem);
         }
-    }
-}
-
-function handleErroAninhados(erroAninhado, mensagem) {
-    const [campoPai, campoFilho] = erroAninhado;
-
-    if (errosUsuario.value[campoPai]) {
-        errosUsuario.value[campoPai][campoFilho] = [];
-        errosUsuario.value[campoPai][campoFilho].push(mensagem);
     }
 }
 
@@ -250,19 +187,9 @@ function setErrosUsuario(dadosUsuario) {
     return erros;
 }
 
-function setErrosEndereco(dadosEndereco) {
-    const erros = {};
-
-    for (const campo in dadosEndereco) {
-        erros[campo] = [];
-    }
-
-    return erros;
-}
-
 function limparErros() {
     msgErro.value = "";
     errosUsuario.value =  setErrosUsuario(usuario);
-    errosEndereco.value =  setErrosEndereco(endereco);
+    enderecoForm.value.limparErros();
 }
 </script>
