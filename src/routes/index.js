@@ -43,6 +43,12 @@ export const routes = [
         name: "instituicoes",
         meta: { layout: 'LayoutPrincipal' },
         component: () => import("../views/Instituicoes.vue"), 
+    },
+    {
+        path: "/cadastrar-instituicao",
+        name: "cadastrar-instituicao",
+        meta: { layout: 'LayoutPrincipal' },
+        component: () => import("../views/NovaInstituicao.vue"), 
     }
 ];
 

@@ -1,6 +1,6 @@
 <template>
-    <div class="grid grid-cols-1 gap-4 justify-items-center xl:gap-36">
-        <BaseCard class="w-full lg:w-3/4 xl:w-4/5">
+    <div>
+        <BaseCard class="w-full mx-auto md:w-5/6 lg:w-4/6 xl:w-3/5">
             <template #cabecalho>
                 <PhBuildings class="mr-2" />
                 Instituições de Ensino

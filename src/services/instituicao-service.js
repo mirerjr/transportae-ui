@@ -33,12 +33,28 @@ function getTipoInstituicao(tipo) {
         INSTITUTO_TECNICO_SUPERIOR: 'Instituto Técnico Superior'
     }
 
-    return tipos[tipo];
+    return tipo ? tipos[tipo] : tipos;
 }
 
-export default {
+function getTipoInstituicaoSelecionado(textTipoSelecionado) {
+    const tipos = getTipoInstituicao();
+    let tipoSelecionado = null;
+
+    for (const tipo in tipos) {
+        const textoTipo = tipos[tipo];
+
+        if (textoTipo == textTipoSelecionado) {
+            tipoSelecionado = tipo;
+        }
+    }
+
+    return tipoSelecionado;
+}
+
+ export default {
     getInstituicao,
     listarInstituicoes,
     cadastrarInstituicao,
-    getTipoInstituicao
+    getTipoInstituicao,
+    getTipoInstituicaoSelecionado
 }
