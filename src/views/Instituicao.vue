@@ -9,18 +9,17 @@
                 <BaseValue
                     campo="Nome"
                     :valor="instituicao.nome"
+                    :carregamento="isCarregando"
                 />
                 <BaseValue
                     campo="Sigla"
                     :valor="instituicao.sigla"
+                    :carregamento="isCarregando"
                 />
                 <BaseValue
                     campo="Tipo"
                     :valor="instituicao.tipoInstituicao"
-                />
-                <BaseValue
-                    campo="endereco"
-                    :valor="instituicao.endereco"
+                    :carregamento="isCarregando"
                 />
             </template>
             <template #rodape>                
@@ -39,15 +38,20 @@ import BaseCard from '../components/BaseCard.vue';
 const props = defineProps(['id']);
 
 const instituicao = ref({});
+const isCarregando = ref(true);
 
 onMounted(async () => {
     await getInstituicao(props.id);
 });
 
 async function getInstituicao(id) {
+    isCarregando.value = true;
+
     const resultado = await instituicaoService.getInstituicao(id);
     instituicao.value = resultado.data;
     instituicao.value.tipoInstituicao = instituicaoService.getTipoInstituicao(instituicao.value.tipoInstituicao);
+
+    isCarregando.value = false;
 }
 
 </script>

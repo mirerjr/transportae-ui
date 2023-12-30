@@ -17,7 +17,13 @@
                 {{ props.campo }}
             </slot>
         </label>
-        <span>
+        <span 
+            v-show="props.carregamento"
+            class="animate-pulse flex space-x-4"
+        >
+            <div class="h-3.5 w-2/4 max-w-xs bg-gray-100 rounded"></div>
+        </span>
+        <span v-show="!props.carregamento">
             <slot name="valor">
                 {{ hasValor ? props.valor : 'N/D' }}
             </slot>
@@ -30,6 +36,7 @@ import { computed } from 'vue';
 const props = defineProps({
     campo: { type: String }, 
     valor: { required: true },
+    carregamento: { type: Boolean, default: false },
     espacamento: {
         type: String,
         default: "normal"
