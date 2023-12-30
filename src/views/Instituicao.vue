@@ -1,6 +1,6 @@
 <template>
-    <div class="grid grid-cols-1 gap-4 justify-items-center xl:gap-36">
-        <BaseCard class="w-full lg:w-3/4 xl:w-4/5">
+    <div class="grid grid-cols-1 gap-4 justify-items-center">
+        <BaseCard class="w-full lg:w-3/4 xl:w-2/6">
             <template #cabecalho>
                 <PhBuildings/>
                 Instituição de Ensino
@@ -25,6 +25,12 @@
             <template #rodape>                
             </template>
         </BaseCard>
+        <EnderecoView
+            :endereco="instituicao?.endereco"
+            :isCarregando="isCarregando"
+            class="w-full lg:w-3/4 xl:w-2/6"
+        />
+        <!-- TODO: View de alunos matriculados -->
     </div>
 </template>
 <script setup>
@@ -34,6 +40,7 @@ import { PhBuildings } from '@phosphor-icons/vue';
 import instituicaoService from '../services/instituicao-service';
 import BaseValue from '../components/form/BaseValue.vue';
 import BaseCard from '../components/BaseCard.vue';
+import EnderecoView from '../components/EnderecoView.vue';
 
 const props = defineProps(['id']);
 

@@ -1,6 +1,6 @@
 <template>
-    <div class="grid gap-4 gap grid-cols-1 md:grid-cols-2 md:gap-36">
-        <BaseCard>
+    <div class="grid grid-cols-1 gap-4 justify-items-center">
+        <BaseCard class="w-full lg:w-3/4 xl:w-2/6">
             <template #cabecalho>
                 <PhUser/>
                 Meu perfil
@@ -31,17 +31,15 @@
                     :valor="usuario.matricula"
                     :isCarregando="isCarregando"
                 />
-                <BaseValue 
-                    campo="Endereço"
-                    :valor="usuario.endereco"
-                    :isCarregando="isCarregando"
-                />
             </template>
             <template #rodape>                
             </template>
         </BaseCard>
-        <BaseCard>
-        </BaseCard>
+        <EnderecoView
+            :endereco="usuario?.endereco"
+            :isCarregando="isCarregando"
+            class="w-full lg:w-3/4 xl:w-2/6"
+        />
     </div>
 </template>
 
@@ -52,6 +50,7 @@ import { ErroPadrao } from '../utils/erros'
 import BaseCard from '../components/BaseCard.vue';
 import BaseValue from '../components/form/BaseValue.vue';
 import { PhUser } from '@phosphor-icons/vue';
+import EnderecoView from '../components/EnderecoView.vue';
 
 const props = defineProps(['id']);
 
