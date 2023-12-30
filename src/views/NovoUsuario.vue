@@ -11,7 +11,7 @@
                 </h3>
             </header>
             <slot name="conteudo">
-                <div class="max-w-sm mb-2">
+                <div class="mb-2">
                     <span class="break-words text-xl font-arimo text-red-400">{{ msgErro }}</span>
                 </div>
                 <form class="w-full flex flex-col items-center" autocomplete="off">
@@ -67,6 +67,20 @@
                         />
                     </div>
                     <div v-show="usuario.perfil == 'ALUNO'" class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
+                        <BaseInput 
+                            nome="Instituição"
+                            placeholder="Instituição de ensino"
+                            tipo="select"
+                            variante="v2"
+                            :opcoes="instituicoes"
+                            opcao-exibida="nome"
+                            opcao-valor="id"
+                            v-model="usuario.instituicaoId"
+                            :erros="errosUsuario.instituicaoId"
+                        />
+                    </div>
+                    <div v-show="usuario.perfil == 'ALUNO'" class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
+
                         <EnderecoForm
                             ref="enderecoForm"
                             :erros="errosEndereco"
@@ -107,10 +121,11 @@ import BaseInput from '../components/form/BaseInput.vue';
 import BaseSwitch from '../components/form/BaseSwitch.vue';
 import usuarioService from '../services/usuario-service';
 import { PhPlus, PhUserPlus, PhArrowLeft, PhCircleNotch } from '@phosphor-icons/vue';
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import { router } from '../routes';
 import { ErroValidacao } from '../utils/erros';
 import EnderecoForm from '../components/form/EnderecoForm.vue';
+import instituicaoService from '../services/instituicao-service';
 
 const usuario  = reactive({
     nome: '',
@@ -120,19 +135,39 @@ const usuario  = reactive({
     telefone: '',
     dataNascimento: '',
     perfil: 'ALUNO',
-    endereco: null
+    endereco: null,
+    instituicaoId: null,
 });
+
+const errosUsuario = ref(setErrosUsuario(usuario));
 
 const enderecoForm = ref(null);
 const errosEndereco = ref([]);
 
-const errosUsuario = ref(setErrosUsuario(usuario));
+const instituicoes = ref([]);
 
 const isCarregando = ref(false);
 const msgErro = ref("");
 
+onMounted(async () => {
+    await listarInstituicoes();
+});
+
 const atualizarPerfil = (opcao) => {
     usuario.perfil = opcao ? 'MOTORISTA' : 'ALUNO';
+}
+
+async function listarInstituicoes() {
+    try {
+        const resposta = await instituicaoService.listarInstituicoes();
+        const dados = resposta?.data?.content;
+
+        instituicoes.value = dados
+
+    } catch (erro) {
+        console.log('Erro ao listar instituições', erro);
+        msgErro.value = "Erro ao exibir as instituições.";
+    }
 }
 
 async function cadastrar() {
@@ -142,6 +177,10 @@ async function cadastrar() {
     try {
         usuario.endereco = usuario.perfil == 'ALUNO' 
             ? enderecoForm.value.endereco
+            : null;
+        
+        usuario.instituicaoId = usuario.perfil == 'ALUNO' 
+            ? usuario.instituicaoId
             : null;
 
         await usuarioService.cadastrarUsuario(usuario);

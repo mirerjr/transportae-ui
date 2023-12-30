@@ -42,7 +42,15 @@
                                     <div class="text-gray-600">{{ usuario.email ?? 'N/D' }}</div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4">{{ usuario.perfil ?? 'N/D' }}</td>
+                            <td class="px-6 py-4">
+                                {{ usuario.perfil ?? 'N/D' }}
+                                <p 
+                                    v-show="usuario?.instituicao?.sigla"
+                                    class="rounded-lg w-fit text-center text-regular px-2 font-gudea bg-blue-100"
+                                >
+                                    {{ usuario?.instituicao?.sigla }}
+                                </p>
+                            </td>
                             <td class="px-6 py-4">{{ usuario.matricula ?? 'N/D' }}</td>
                             <td class="px-6 py-4">{{ usuario.telefone ?? 'N/D' }}</td>
                             <td class="px-6 py-4">

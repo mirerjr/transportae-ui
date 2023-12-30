@@ -49,9 +49,9 @@
             </option>
             <option
                 v-for="opcao in props.opcoes"
-                :value="opcao"
+                :value="opcaoValor ? opcao[opcaoValor] : opcao"
             >
-                {{ opcao }}
+                {{ opcaoExibida ? opcao[opcaoExibida] : opcao }}
             </option>
     </select>
     <div v-if="props.iconeFinal" class="absolute translate-y-3 translate-x-2.5 mt-0.5 ">
@@ -103,6 +103,12 @@ const props = defineProps({
     opcoes: {
         type: Array,
         default: []
+    },
+    opcaoExibida: {
+        type: String,
+    },
+    opcaoValor: {
+        type: String,
     },
     variante: {
         type: String,
