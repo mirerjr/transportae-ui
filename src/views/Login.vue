@@ -1,5 +1,5 @@
 <template>
-    <BaseCard>
+    <BaseCard variante="v2">
         <template #cabecalho>
             <PhUser/> Login
         </template>

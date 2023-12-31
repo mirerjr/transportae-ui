@@ -1,6 +1,6 @@
 <template>
     <div class="grid grid-cols-1 gap-4 justify-items-center xl:gap-36">
-        <BaseCard class="w-full lg:w-3/4 xl:w-4/5">
+        <BaseCard class="w-full lg:w-3/4 xl:w-4/5" variante="v2">
             <template #cabecalho>
                 <PhUsers class="mr-2" />
                 Usuários

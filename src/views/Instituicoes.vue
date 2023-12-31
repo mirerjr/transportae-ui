@@ -1,6 +1,6 @@
 <template>
     <div>
-        <BaseCard class="w-full mx-auto md:w-5/6 lg:w-4/6 xl:w-3/5">
+        <BaseCard class="w-full mx-auto md:w-5/6 lg:w-4/6 xl:w-3/5" variante="v2">
             <template #cabecalho>
                 <PhBuildings class="mr-2" />
                 Instituições de Ensino
