@@ -25,6 +25,14 @@ function cadastrarInstituicao(instituicao) {
     return apiConsumer.enviar(config);
 }
 
+function listarAlunosVinculados(id) {
+    const config = apiConsumer.configuracao;
+    config.metodo = 'get';
+    config.endpoint = `/instituicoes/${id}/alunos`;
+
+    return apiConsumer.enviar(config);
+}
+
 function getTipoInstituicao(tipo) {
     const tipos = {
         UNIVERSIDADE: 'Universidade',
@@ -54,6 +62,7 @@ function getTipoInstituicaoSelecionado(textTipoSelecionado) {
  export default {
     getInstituicao,
     listarInstituicoes,
+    listarAlunosVinculados,
     cadastrarInstituicao,
     getTipoInstituicao,
     getTipoInstituicaoSelecionado
