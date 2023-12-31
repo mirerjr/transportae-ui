@@ -1,20 +1,26 @@
 <template>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="grid gap-4 md:col-span-1 md:justify-items-end">
-            <BaseCard class="w-full lg:w-2/4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+        <div class="grid gap-4 md:gap-8 md:col-span-1 md:justify-items-end">
+            <BaseCard class="w-full lg:w-7/12">
                 <template #cabecalho>
                     <PhUser/>
-                    Meu perfil
+                    {{ props.id ? 'Usuário' : 'Meu perfil' }}
                 </template>
                 <template #conteudo>
                     <BaseValue 
-                        campo="Data de nascimento"
-                        :valor="usuario.dataNascimento"
+                        campo="Nome"
+                        :valor="usuario.nome"
                         :isCarregando="isCarregando"
                     />
+                    <!-- TODO: Enviar email para primeiro acesso -->
                     <BaseValue 
                         campo="Email"
                         :valor="usuario.email"
+                        :isCarregando="isCarregando"
+                    />
+                    <BaseValue 
+                        campo="Data de nascimento"
+                        :valor="usuario.dataNascimento"
                         :isCarregando="isCarregando"
                     />
                     <BaseValue 
@@ -39,13 +45,13 @@
             <EnderecoView
                 :endereco="usuario?.endereco"
                 :isCarregando="isCarregando"
-                class="w-full lg:w-2/4"
+                class="w-full lg:w-7/12"
             />
         </div>
         <InstituicaoView
             :instituicao="usuario?.instituicao"
             :isCarregando="isCarregando"
-            class="w-full h-fit lg:w-2/4"
+            class="w-full h-fit lg:w-7/12"
         />
     </div>
 </template>
