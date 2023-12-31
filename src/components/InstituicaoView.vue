@@ -1,8 +1,15 @@
 <template>
     <BaseCard>
         <template #cabecalho>
-            <PhBuildings/>
+            <PhBuildings />
             Instituição
+        </template>
+        <template #cabecalho-btn>
+            <PhArrowSquareOut 
+                v-if="instituicao?.id"
+                class="text-2xl align-middle cursor-pointer hover:text-gray-600"
+                @click="$router.push(`/instituicao/${instituicao.id}`)"
+            />
         </template>
         <template #conteudo>
             <BaseValue 
@@ -28,8 +35,8 @@
 
 <script setup>
 import BaseCard from '../components/BaseCard.vue';
-import BaseValue from '../components/form/BaseValue.vue';
-import { PhBuildings } from '@phosphor-icons/vue';
+import BaseValue from './form/BaseValue.vue';
+import { PhBuildings, PhArrowSquareOut } from '@phosphor-icons/vue';
 
 const props = defineProps(['instituicao', 'isCarregando']);
 </script>
