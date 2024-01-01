@@ -56,6 +56,12 @@ export const routes = [
         name: "instituicao",
         meta: { layout: 'LayoutPrincipal' },
         component: () => import("../views/Instituicao.vue"), 
+    },
+    {
+        path: "/linhas",
+        name: "linhas",
+        meta: { layout: 'LayoutPrincipal' },
+        component: () => import("../views/Linhas.vue"),
     }
 ];
 

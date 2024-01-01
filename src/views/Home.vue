@@ -13,7 +13,7 @@
                     <CardBtn @click="$router.push('/instituicoes')">
                         <PhBuildings weight="light" class="text-3xl" /> Instituições de Ensino
                     </CardBtn>
-                    <CardBtn>
+                    <CardBtn @click="$router.push('/linhas')">
                         <PhBus weight="light" class="text-3xl" /> Linhas de Ônibus
                     </CardBtn>
                     <CardBtn @click="$router.push('/usuarios')">
