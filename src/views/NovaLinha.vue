@@ -5,6 +5,13 @@
                 <PhBus class="mr-2"/>
                 Nova Linha
             </template>
+            <template #cabecalho-btn>
+                <IdentificadorLinha
+                    :linha="linha"
+                    :turnos="turnos"
+                    :motorista="motoristaSelecionado"
+                />
+            </template>
             <template #conteudo>
                 <div class="max-w-sm mb-2">
                     <span class="break-words text-lg font-arimo text-red-400">{{ msgErro }}</span>
