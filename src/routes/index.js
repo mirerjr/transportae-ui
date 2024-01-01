@@ -62,6 +62,12 @@ export const routes = [
         name: "linhas",
         meta: { layout: 'LayoutPrincipal' },
         component: () => import("../views/Linhas.vue"),
+    },
+    {
+        path: "/cadastrar-linha",
+        name: "cadastrar-linha",
+        meta: { layout: 'LayoutPrincipal' },
+        component: () => import("../views/NovaLinha.vue"),
     }
 ];
 
