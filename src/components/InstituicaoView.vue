@@ -18,7 +18,7 @@
                 :isCarregando="isCarregando"
             />
             <BaseValue 
-                campo="Siga"
+                campo="Sigla"
                 :valor="instituicao?.sigla"
                 :isCarregando="isCarregando"
             />
