@@ -50,6 +50,14 @@ async function listarUsuarios(pagina = 1, pesquisa = "") {
     return await apiConsumer.enviar(config);
 }
 
+async function getMotoristas() {
+    const config = apiConsumer.configuracao;
+    config.metodo = 'get';
+    config.endpoint = '/usuarios/motoristas';
+
+    return await apiConsumer.enviar(config);
+}
+
 async function cadastrarUsuario(usuario) {
     const config = apiConsumer.configuracao;
     config.metodo = 'post';
@@ -66,5 +74,6 @@ export default {
     getUsuario,
     getUsuarioLogado,
     listarUsuarios,
+    getMotoristas,
     cadastrarUsuario,
 }
