@@ -24,7 +24,7 @@
             />
             <BaseValue 
                 campo="Tipo"
-                :valor="instituicao?.tipo"
+                :valor="tipoInstituicao"
                 :isCarregando="isCarregando"
             />
         </template>
@@ -34,9 +34,16 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import BaseCard from '../components/BaseCard.vue';
+import instituicaoService from '../services/instituicao-service';
 import BaseValue from './form/BaseValue.vue';
 import { PhBuildings, PhArrowSquareOut } from '@phosphor-icons/vue';
 
 const props = defineProps(['instituicao', 'isCarregando']);
+const tiposInstituicao = instituicaoService.getTipoInstituicao();
+
+const tipoInstituicao = computed(() => {
+    return tiposInstituicao[props?.instituicao?.tipoInstituicao];
+});
 </script>
