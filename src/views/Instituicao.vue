@@ -37,6 +37,15 @@
                 <PhStudent />
                 Alunos
             </template>
+            <template #cabecalho-btn>
+                <BaseBtn
+                    @click="adicionarAluno()"
+                    variante-tamanho="sm"
+                    variante-cor="blue"
+                >
+                    <PhPlus />
+                </BaseBtn>
+            </template>
             <template #conteudo>
                 <ul>
                     <li 
@@ -59,12 +68,14 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
-import { PhBuildings, PhPencilSimple, PhStudent } from '@phosphor-icons/vue';
+import { PhBuildings, PhPencilSimple, PhPlus, PhStudent } from '@phosphor-icons/vue';
 
 import instituicaoService from '../services/instituicao-service';
 import BaseValue from '../components/form/BaseValue.vue';
 import BaseCard from '../components/BaseCard.vue';
 import EnderecoView from '../components/EnderecoView.vue';
+import BaseBtn from '../components/form/BaseBtn.vue';
+import { router } from '../routes';
 
 const props = defineProps(['id']);
 
@@ -92,4 +103,12 @@ async function listarAlunos(id) {
     alunos.value = resultado.data;
 }
 
+function adicionarAluno() {
+    router.push({
+        path: '/cadastrar-usuario',
+        query: {
+            instituicaoId: props.id,
+        }
+    })
+}
 </script>

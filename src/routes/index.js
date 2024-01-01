@@ -34,6 +34,9 @@ export const routes = [
     },
     {
         path: "/cadastrar-usuario",
+        props: (route) => ({
+            instituicaoId: route.query.instituicaoId
+        }),
         name: "cadastrar-usuario",
         meta: { layout: 'LayoutPrincipal'},
         component: () => import ("../views/NovoUsuario.vue"),

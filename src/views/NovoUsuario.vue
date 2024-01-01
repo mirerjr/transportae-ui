@@ -128,6 +128,8 @@ import EnderecoForm from '../components/form/EnderecoForm.vue';
 import instituicaoService from '../services/instituicao-service';
 import formService from '../services/form-service';
 
+const props = defineProps(['instituicaoId']);
+
 const usuario  = reactive({
     nome: '',
     email: '',
@@ -152,6 +154,11 @@ const msgErro = ref("");
 
 onMounted(async () => {
     await listarInstituicoes();
+    
+    if (props.instituicaoId) {
+        const instituicao = instituicoes.value.find(instituicao => instituicao.id == props.instituicaoId);
+        usuario.instituicaoId = instituicao?.id;
+    }
 });
 
 const atualizarPerfil = (opcao) => {
