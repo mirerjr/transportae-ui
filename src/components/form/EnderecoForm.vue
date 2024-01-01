@@ -49,6 +49,7 @@
 import { ref, reactive, watchEffect } from 'vue';
 import BaseInput from './BaseInput.vue';
 import cidades from '../../utils/cidades';
+import formService from '../../services/form-service';
 
 const emit = defineEmits(['update:modelValue']);
 
@@ -68,14 +69,7 @@ const endereco = reactive({
     cep: ''
 });
 
-const errosEndereco = reactive({
-    descricao: [],
-    numero: [],
-    bairro: [],
-    cidade: [],
-    complemento: [],
-    cep: []
-});
+const errosEndereco = ref(formService.setErros(endereco));
 
 watchEffect(() => {
     if (props.erros.length == 0) return;
@@ -84,6 +78,8 @@ watchEffect(() => {
 
 // Ex.: endereco.cep -> cep = ["CEP obrigatório", ...]
 function handleErroValidacao(erro) {
+    limparErros();
+
     for (const { campo, mensagem } of erro) {
         const isErroEndereco = campo.includes("endereco.");
         const erroAninhado = campo.split('.');
@@ -92,16 +88,14 @@ function handleErroValidacao(erro) {
 
         const campoEndereco = erroAninhado[1];
 
-        if (errosEndereco[campoEndereco] != null) {
-            errosEndereco[campoEndereco].push(mensagem);
+        if (errosEndereco.value[campoEndereco] != null) {
+            errosEndereco.value[campoEndereco].push(mensagem);
         }
     }
 }
 
 function limparErros() {
-    for (const campo in errosEndereco) {
-        errosEndereco[campo] = [];
-    }
+    errosEndereco.value = formService.setErros(endereco);
 }
 
 defineExpose({

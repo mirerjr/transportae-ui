@@ -80,6 +80,7 @@ import BaseCard from '../components/BaseCard.vue';
 import BaseBtn from '../components/form/BaseBtn.vue';
 import BaseInput from '../components/form/BaseInput.vue';
 import EnderecoForm from '../components/form/EnderecoForm.vue';
+import formService from '../services/form-service';
 
 const tiposInstituicao = reactive(
     Object.values(instituicaoService.getTipoInstituicao())
@@ -92,7 +93,7 @@ const instituicao = reactive({
     endereco: null
 });
 
-const errosInstituicao = ref(setErrosInstituicao(instituicao));
+const errosInstituicao = ref(formService.setErros(instituicao));
 
 const enderecoForm = ref(null);
 const errosEndereco = ref([]);
@@ -137,25 +138,9 @@ function handleErroValidacao(erro) {
     }
 }
 
-function setErrosInstituicao(dadosInstituicao) {
-    const erros = {};
-
-    for (const campo in dadosInstituicao) {
-        const isCampoAninhado = typeof dadosInstituicao[campo] === 'object' && dadosInstituicao[campo] !== null;
-
-        if (isCampoAninhado) {
-            erros[campo] = setErrosInstituicao(dadosInstituicao[campo]);
-        } else {
-            erros[campo] = [];
-        }
-    }
-
-    return erros;
-}
-
 function limparErros() {
     msgErro.value = "";
-    errosInstituicao.value =  setErrosInstituicao(instituicao);
+    errosInstituicao.value = formService.setErros(instituicao);
     enderecoForm.value.limparErros();
 }
 </script>

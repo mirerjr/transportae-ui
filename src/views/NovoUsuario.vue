@@ -126,6 +126,7 @@ import { router } from '../routes';
 import { ErroValidacao } from '../utils/erros';
 import EnderecoForm from '../components/form/EnderecoForm.vue';
 import instituicaoService from '../services/instituicao-service';
+import formService from '../services/form-service';
 
 const usuario  = reactive({
     nome: '',
@@ -139,7 +140,7 @@ const usuario  = reactive({
     instituicaoId: null,
 });
 
-const errosUsuario = ref(setErrosUsuario(usuario));
+const errosUsuario = ref(formService.setErros(usuario));
 
 const enderecoForm = ref(null);
 const errosEndereco = ref([]);
@@ -210,25 +211,9 @@ function handleErroValidacao(erro) {
     }
 }
 
-function setErrosUsuario(dadosUsuario) {
-    const erros = {};
-
-    for (const campo in dadosUsuario) {
-        const isCampoAninhado = typeof dadosUsuario[campo] === 'object' && dadosUsuario[campo] !== null;
-
-        if (isCampoAninhado) {
-            erros[campo] = setErrosUsuario(dadosUsuario[campo]);
-        } else {
-            erros[campo] = [];
-        }
-    }
-
-    return erros;
-}
-
 function limparErros() {
     msgErro.value = "";
-    errosUsuario.value =  setErrosUsuario(usuario);
+    errosUsuario.value =  formService.setErros(usuario);
     enderecoForm.value.limparErros();
 }
 </script>
