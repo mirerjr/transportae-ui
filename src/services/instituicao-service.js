@@ -44,22 +44,18 @@ function getTipoInstituicao(tipo) {
     return tipo ? tipos[tipo] : tipos;
 }
 
-function getTipoInstituicaoSelecionado(textTipoSelecionado) {
+function getTipoInstituicaoSelecionado(tipoSelecionado) {
     const tipos = getTipoInstituicao();
-    let tipoSelecionado = null;
 
     for (const tipo in tipos) {
-        const textoTipo = tipos[tipo];
-
-        if (textoTipo == textTipoSelecionado) {
-            tipoSelecionado = tipo;
+        if (tipos[tipo] === tipoSelecionado) {
+            return tipo;
         }
     }
-
-    return tipoSelecionado;
 }
 
- export default {
+
+export default {
     getInstituicao,
     listarInstituicoes,
     listarAlunosVinculados,
