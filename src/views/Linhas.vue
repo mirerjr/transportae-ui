@@ -45,7 +45,7 @@
                         </td>
                         <td class="px-6 py-4">{{ linha?.nome ?? 'N/D' }}</td>
                         <td class="px-6 py-4">{{ linha?.turno ?? 'N/D' }}</td>
-                        <td class="px-6 py-4">{{ linha?.motorista?.nome ?? 'N/D' }}</td>
+                        <td class="px-6 py-4">{{ linha?.totalUsuarios }} / {{ linha?.totalAssentos }}</td>
                         <td class="px-6 py-4">
                             <button
                                 @click="$router.push(`/linha/${linha.id}`)"
@@ -88,7 +88,7 @@ import Paginacao from '../components/table/Paginacao.vue';
 import BaseInput from '../components/form/BaseInput.vue';
 import linhaService from '../services/linha-service';
 
-const colunas = ref(['nome', 'turno', 'motorista', 'ações']);
+const colunas = ref(['nome', 'turno', 'Ocupação', 'ações']);
 const linhas = ref([]);
 const isCarregando = ref(false);
 

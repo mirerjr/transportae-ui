@@ -15,7 +15,7 @@
                     <span class="break-words text-lg font-arimo text-red-400">{{ msgErro }}</span>
                 </div>
                 <form class="w-full grid grid-cols-1 justify-items-center gap-4" autocomplete="off">
-                    <div class="w-full grid grid-cols-2 gap-4">
+                    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
                         <BaseInput 
                             nome="Nome"
                             placeholder="Nome"
@@ -32,18 +32,20 @@
                             v-model="linha.turno"
                             :erros="errosLinha.turno"
                         />
-                    </div>
-                    <div class="w-full grid grid-cols-1 gap-4">
-                        <BaseInput
-                            nome="Motorista"
-                            placeholder="Motorista responsável"
+                        <BaseInput 
+                            nome="Total de assentos"
+                            placeholder="Total de assentos"
                             variante="v2"
-                            tipo="select"
-                            v-model="linha.motoristaId"
-                            opcao-exibida="nome"
-                            opcao-valor="id"
-                            :opcoes="motoristas"
-                            :erros="errosLinha.motoristaId"
+                            tipo="number"
+                            v-model="linha.totalAssentos"
+                            :erros="errosLinha.totalAssentos"
+                        />
+                        <BaseInput 
+                            nome="Código/Placa"
+                            placeholder="Código do veículo"
+                            variante="v2"
+                            v-model="linha.codigoVeiculo"
+                            :erros="errosLinha.codigoVeiculo"
                         />
                     </div>
                     <div class="w-full grid grid-cols-1 lg:grid-cols-2 lg:gap-4">
@@ -92,7 +94,8 @@ const msgErro = ref('');
 const linha = reactive({
     nome: '',
     turno: '',
-    motoristaId: null,
+    totalAssentos: null,
+    codigoVeiculo: '',
 });
 
 const turnos = reactive(getTurnos());
@@ -135,10 +138,7 @@ async function cadastrar() {
 
         if (!linhaId) { throw new Error("Falha ao cadastrar a linha"); }
 
-        router.back();
-
-        //TODO: redirecionar para a pág que cadastra o itinerário da linha
-        // router.push(`/linha/${linhaId}`);
+        router.push(`/linha/${linhaId}`);
 
     } catch (erro) {
         linha.turno = turnoSelecionado;
