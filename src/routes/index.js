@@ -35,6 +35,7 @@ export const routes = [
     {
         path: "/cadastrar-usuario",
         props: (route) => ({
+            linhaId: route.query.linhaId, 
             instituicaoId: route.query.instituicaoId
         }),
         name: "cadastrar-usuario",
@@ -71,8 +72,18 @@ export const routes = [
         name: "cadastrar-linha",
         meta: { layout: 'LayoutPrincipal' },
         component: () => import("../views/NovaLinha.vue"),
+    },
+    {
+        path: "/linha/:id?",
+        props: true,
+        name: "linha",
+        meta: { layout: 'LayoutPrincipal' },
+        component: () => import("../views/Linha.vue"),
     }
 ];
+
+// TODO: Criar tela 404
+// https://router.vuejs.org/guide/essentials/dynamic-matching.html#Catch-all-404-Not-found-Route
 
 export const router = createRouter({
     history: createWebHashHistory(),

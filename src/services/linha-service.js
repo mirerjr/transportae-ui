@@ -1,5 +1,13 @@
 import apiConsumer from "./api-consumer";
 
+function getLinha(id) {
+    const config = apiConsumer.configuracao;
+    config.metodo = 'get';
+    config.endpoint = `/linhas/${id}`;
+
+    return apiConsumer.enviar(config);
+}
+
 function cadastrarLinha(linha) {
     const config = apiConsumer.configuracao;
     config.metodo = 'post';
@@ -13,6 +21,14 @@ function listarLinhas(pagina = 1, pesquisa = "", turno = "") {
     const config = apiConsumer.configuracao;
     config.metodo = 'get';
     config.endpoint = `/linhas?page=${pagina - 1}&search=${pesquisa}&turno=${turno}`;
+
+    return apiConsumer.enviar(config);
+}
+
+function listarUsuariosVinculados(idLinha) {
+    const config = apiConsumer.configuracao;
+    config.metodo = 'get';
+    config.endpoint = `/linhas/${idLinha}/usuarios`;
 
     return apiConsumer.enviar(config);
 }
@@ -39,8 +55,10 @@ function getTurnoLinhaSelecionado(turnoSelecionado) {
 }
 
 export default {
+    getLinha,
     cadastrarLinha,
     listarLinhas,
     getTurnoLinha,
-    getTurnoLinhaSelecionado
+    listarUsuariosVinculados,
+    getTurnoLinhaSelecionado,
 }

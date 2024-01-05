@@ -44,13 +44,6 @@
                             v-model="usuario.telefone"
                             :erros="errosUsuario.telefone"
                         />
-                        <BaseInput 
-                            nome="Matrícula"
-                            placeholder="Matrícula"
-                            variante="v2"
-                            v-model="usuario.matricula"
-                            :erros="errosUsuario.matricula"
-                        />
                         <BaseInput
                             nome="Data de nascimento"
                             placeholder="Data de nascimento"
@@ -59,6 +52,19 @@
                             v-model="usuario.dataNascimento"
                             :erro="errosUsuario.dataNascimento"
                         />
+                        <BaseInput
+                            nome="Linha"
+                            placeholder="Linha de transporte"
+                            tipo="select"
+                            variante="v2"
+                            :opcoes="linhas"
+                            opcao-exibida="nome"
+                            opcao-valor="id"
+                            v-model="usuario.linhaTransporteId"
+                            :erros="errosUsuario.linhaTransporteId"
+                        />
+                    </div>
+                    <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
                         <BaseSwitch
                             opcao-esquerda="Aluno"
                             opcao-direita="Motorista"
@@ -77,6 +83,13 @@
                             opcao-valor="id"
                             v-model="usuario.instituicaoId"
                             :erros="errosUsuario.instituicaoId"
+                        />
+                        <BaseInput 
+                            nome="Matrícula"
+                            placeholder="Matrícula"
+                            variante="v2"
+                            v-model="usuario.matricula"
+                            :erros="errosUsuario.matricula"
                         />
                     </div>
                     <div v-show="usuario.perfil == 'ALUNO'" class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
@@ -127,8 +140,9 @@ import { ErroValidacao } from '../utils/erros';
 import EnderecoForm from '../components/form/EnderecoForm.vue';
 import instituicaoService from '../services/instituicao-service';
 import formService from '../services/form-service';
+import linhaService from '../services/linha-service';
 
-const props = defineProps(['instituicaoId']);
+const props = defineProps(['instituicaoId', 'linhaTransporteId']);
 
 const usuario  = reactive({
     nome: '',
@@ -140,6 +154,7 @@ const usuario  = reactive({
     perfil: 'ALUNO',
     endereco: null,
     instituicaoId: null,
+    linhaTransporteId: null,
 });
 
 const errosUsuario = ref(formService.setErros(usuario));
@@ -148,12 +163,14 @@ const enderecoForm = ref(null);
 const errosEndereco = ref([]);
 
 const instituicoes = ref([]);
+const linhas = ref([]);
 
 const isCarregando = ref(false);
 const msgErro = ref("");
 
 onMounted(async () => {
     await listarInstituicoes();
+    await listarLinhas()
     
     if (props.instituicaoId) {
         const instituicao = instituicoes.value.find(instituicao => instituicao.id == props.instituicaoId);
@@ -175,6 +192,19 @@ async function listarInstituicoes() {
     } catch (erro) {
         console.log('Erro ao listar instituições', erro);
         msgErro.value = "Erro ao exibir as instituições.";
+    }
+}
+
+async function listarLinhas() {
+    try {
+        const resposta = await linhaService.listarLinhas();
+        const dados = resposta?.data?.content;
+
+        linhas.value = dados
+
+    } catch (erro) {
+        console.log('Erro ao listar linhas', erro);
+        msgErro.value = "Erro ao exibir as linhas.";
     }
 }
 
