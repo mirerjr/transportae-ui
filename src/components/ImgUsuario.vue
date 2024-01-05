@@ -1,6 +1,15 @@
 <template>
-    <div class="w-10 h-10 p-2 rounded-full bg-blue-100 font-bold text-center align-middle">
-        {{ props.nome.charAt(0) }}
+    <div 
+        class="w-10 h-10 p-2 rounded-full border-2 font-bold flex items-center justify-center"
+        :class="props.icone ? 'border-blue-100' : 'bg-blue-100 border-blue-100'"
+    >
+        <component
+            v-if="icone"
+            :is="icone"
+        />
+        <span v-else>
+            {{ props.nome.charAt(0) }}
+        </span>
     </div>
 </template>
 
@@ -10,6 +19,11 @@ const props = defineProps({
         type: String,
         required: true,
         default: "Z",
-    }
+    },
+    icone: {
+        type: Object,
+        required: false,
+        default: null,
+    },
 })
 </script>

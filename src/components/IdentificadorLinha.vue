@@ -16,6 +16,7 @@
                 {{ props.linha.turno }}
             </label>
         </span>
+        <!-- TODO: Código do veículo -->
     </section>
 </template>
 

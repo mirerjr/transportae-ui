@@ -8,8 +8,6 @@
             <template #cabecalho-btn>
                 <IdentificadorLinha
                     :linha="linha"
-                    :turnos="turnos"
-                    :motorista="motoristaSelecionado"
                 />
             </template>
             <template #conteudo>
