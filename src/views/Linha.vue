@@ -23,18 +23,19 @@
                 Usuários
             </template>
             <template #cabecalho-btn>
-                <span class="font-roboto">
+                <div class="font-roboto flex items-center">
                     {{ linha?.totalUsuarios }} / {{ linha?.totalAssentos }}
-                    <BaseBtn
-                        v-show="linha.totalUsuarios < linha.totalAssentos"
-                        @click="adicionarAluno()"
-                        variante-tamanho="sm"
-                        variante-cor="blue"
-                        class="w-8 ml-2"
-                    >
-                        <PhPlus />
-                    </BaseBtn>
-                </span>
+                    <div class="w-8 ml-2">
+                        <BaseBtn
+                            v-show="linha.totalUsuarios < linha.totalAssentos"
+                            @click="adicionarAluno()"
+                            variante-tamanho="sm"
+                            variante-cor="blue"
+                        >
+                            <PhPlus />
+                        </BaseBtn>
+                    </div>
+                </div>
             </template>
             <template #conteudo>
                 <!-- TODO: remover usuários da linha -->
