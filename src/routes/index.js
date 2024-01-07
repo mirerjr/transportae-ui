@@ -8,6 +8,15 @@ export const routes = [
         component: () => import("../views/NotFound.vue"),
     },
     {
+        path: "/forbbiden",
+        name: "forbbiden",        
+        props: (route) => ({
+            nomeRotaAnterior: route.query.rotaAnterior, 
+        }),
+        meta: { layout: 'LayoutLogo' },
+        component: () => import("../views/Forbbiden.vue"),
+    },
+    {
         path: "/login",
         name: "login",
         meta: { layout: 'LayoutLogo' },
@@ -22,13 +31,26 @@ export const routes = [
     {
         path: "/",
         name: "home",
-        meta: { layout: 'LayoutPrincipal' },
+        meta: { 
+            layout: 'LayoutPrincipal',
+            perfil: "ADMIN", 
+        },
         component: () => import("../views/home.vue"),
+    },
+    {
+        path: "/cadastrar-endereco",
+        name: "cadastrar-endereco",
+        props: true,
+        meta: { layout: 'LayoutPrincipal' },
+        component: () => import("../views/NovoEndereco.vue"),
     },
     {
         path: "/usuarios",
         name: "usuarios",
-        meta: { layout: 'LayoutPrincipal' },
+        meta: { 
+            layout: 'LayoutPrincipal',
+            perfil: "ADMIN", 
+        },
         component: () => import("../views/Usuarios.vue"),
     },
     {
@@ -45,45 +67,66 @@ export const routes = [
             instituicaoId: route.query.instituicaoId
         }),
         name: "cadastrar-usuario",
-        meta: { layout: 'LayoutPrincipal'},
+        meta: { 
+            layout: 'LayoutPrincipal',
+            perfil: "ADMIN", 
+        },
         component: () => import ("../views/NovoUsuario.vue"),
     },
     {
         path: "/instituicoes",
         name: "instituicoes",
-        meta: { layout: 'LayoutPrincipal' },
+        meta: { 
+            layout: 'LayoutPrincipal',
+            perfil: "ADMIN", 
+        },
         component: () => import("../views/Instituicoes.vue"), 
     },
     {
         path: "/cadastrar-instituicao",
         name: "cadastrar-instituicao",
-        meta: { layout: 'LayoutPrincipal' },
+        meta: { 
+            layout: 'LayoutPrincipal',
+            perfil: "ADMIN", 
+        },
         component: () => import("../views/NovaInstituicao.vue"), 
     },
     {
         path: "/instituicao/:id?",
         props: true,
         name: "instituicao",
-        meta: { layout: 'LayoutPrincipal' },
+        meta: { 
+            layout: 'LayoutPrincipal',
+            perfil: "ADMIN", 
+        },
         component: () => import("../views/Instituicao.vue"), 
     },
     {
         path: "/linhas",
         name: "linhas",
-        meta: { layout: 'LayoutPrincipal' },
+        meta: { 
+            layout: 'LayoutPrincipal',
+            perfil: "ADMIN", 
+        },
         component: () => import("../views/Linhas.vue"),
     },
     {
         path: "/cadastrar-linha",
         name: "cadastrar-linha",
-        meta: { layout: 'LayoutPrincipal' },
+        meta: { 
+            layout: 'LayoutPrincipal',
+            perfil: "ADMIN", 
+        },
         component: () => import("../views/NovaLinha.vue"),
     },
     {
         path: "/linha/:id?",
         props: true,
         name: "linha",
-        meta: { layout: 'LayoutPrincipal' },
+        meta: { 
+            layout: 'LayoutPrincipal',
+            perfil: "ADMIN", 
+        },
         component: () => import("../views/Linha.vue"),
     },
     {
@@ -92,7 +135,10 @@ export const routes = [
             linhaTransporteId: route.query.linhaId, 
         }),
         name: "cadastrar-ponto",
-        meta: { layout: 'LayoutPrincipal' },
+        meta: { 
+            layout: 'LayoutPrincipal',
+            perfil: "ADMIN", 
+        },
         component: () => import("../views/NovoPonto.vue"),
     },
 ];

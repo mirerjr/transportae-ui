@@ -1,11 +1,27 @@
 import apiConsumer from './api-consumer';
 import { useUsuarioStore } from '../stores/usuario-store';
+import { jwtDecode } from 'jwt-decode';
 
 function isUsuarioLogado() {
-    const usuarioStore = useUsuarioStore();
-    const token = usuarioStore.getToken() || usuarioStore.tokenTemporario;
-
+    const token = getToken();
     return token != undefined && token != null && token != '';
+}
+
+function getToken() {
+    const usuarioStore = useUsuarioStore();
+    return usuarioStore.getToken() || usuarioStore.tokenTemporario;
+}
+
+function getPerfilUsuario() {
+    const token = getToken();
+    const tokenDecodificado = jwtDecode(token);
+    return tokenDecodificado?.authorities[0]?.authority;
+}
+
+function isTokenExpirado() {
+    const token = getToken();
+    const tokenDecodificado = jwtDecode(token);
+    return Date.now() >= tokenDecodificado.exp * 1000;
 }
 
 async function logar(usuario) {
@@ -69,6 +85,9 @@ async function cadastrarUsuario(usuario) {
 
 export default {
     isUsuarioLogado,
+    getToken,
+    getPerfilUsuario,
+    isTokenExpirado,
     logar,
     alterarSenha,
     getUsuario,
