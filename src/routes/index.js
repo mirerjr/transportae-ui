@@ -28,14 +28,20 @@ export const routes = [
         meta: { layout: 'LayoutLogo'},
         component: () => import("../views/AlterarSenha.vue"),
     },
+    // {
+    //     path: "/",
+    //     name: "home",
+    //     meta: { layout: 'LayoutPrincipal' },
+    //     component: () => import("../views/Home.vue"),
+    // },
     {
-        path: "/",
-        name: "home",
+        path: "/admin",
+        name: "admin",
         meta: { 
             layout: 'LayoutPrincipal',
             perfil: "ADMIN", 
         },
-        component: () => import("../views/home.vue"),
+        component: () => import("../views/admin.vue"),
     },
     {
         path: "/cadastrar-endereco",
