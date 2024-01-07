@@ -2,6 +2,12 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 export const routes = [
     {
+        path: "/:pathMatch(.*)*",
+        name: "not-found",
+        meta: { layout: 'LayoutLogo' },
+        component: () => import("../views/NotFound.vue"),
+    },
+    {
         path: "/login",
         name: "login",
         meta: { layout: 'LayoutLogo' },
