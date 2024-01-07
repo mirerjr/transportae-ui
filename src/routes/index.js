@@ -35,7 +35,7 @@ export const routes = [
     {
         path: "/cadastrar-usuario",
         props: (route) => ({
-            linhaId: route.query.linhaId, 
+            linhaTransporteId: route.query.linhaId, 
             instituicaoId: route.query.instituicaoId
         }),
         name: "cadastrar-usuario",

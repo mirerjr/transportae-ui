@@ -176,6 +176,10 @@ onMounted(async () => {
         const instituicao = instituicoes.value.find(instituicao => instituicao.id == props.instituicaoId);
         usuario.instituicaoId = instituicao?.id;
     }
+    if (props.linhaTransporteId) {
+        const linha = linhas.value.find(linha => linha.id == props.linhaTransporteId);
+        usuario.linhaTransporteId = linha?.id;
+    }
 });
 
 const atualizarPerfil = (opcao) => {
