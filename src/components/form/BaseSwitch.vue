@@ -43,7 +43,7 @@ const props = defineProps({
     },
     opcaoEsquerda: {
         type: String,
-        defult: "Não",
+        default: "Não",
     },
     opcaoDireita: {
         type: String,
