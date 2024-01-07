@@ -79,7 +79,16 @@ export const routes = [
         name: "linha",
         meta: { layout: 'LayoutPrincipal' },
         component: () => import("../views/Linha.vue"),
-    }
+    },
+    {
+        path: "/cadastrar-ponto",
+        props: (route) => ({
+            linhaTransporteId: route.query.linhaId, 
+        }),
+        name: "cadastrar-ponto",
+        meta: { layout: 'LayoutPrincipal' },
+        component: () => import("../views/NovoPonto.vue"),
+    },
 ];
 
 // TODO: Criar tela 404
