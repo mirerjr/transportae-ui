@@ -66,7 +66,7 @@ onMounted(async () => {
         const resultado = await usuarioService.getUsuarioLogado();
         const { nome, perfil } = resultado.data;
 
-        usuario.nome = getPrimeiroUltimoNome(nome);
+        usuario.nome = filters.getPrimeiroUltimoNome(nome);
         usuario.perfil = getPerfilUsuario(perfil);
 
     } catch (erro) {
@@ -74,14 +74,6 @@ onMounted(async () => {
         router.push('/login');
     }
 });
-
-function getPrimeiroUltimoNome(nomeCompleto) {
-    const nomes = nomeCompleto.split(' ');
-    const primeiroNome = nomes[0];
-    const ultimoNome = nomes[nomes.length - 1];
-
-    return `${primeiroNome} ${ultimoNome}`;
-}
 
 function getPerfilUsuario(perfil) {
     const perfis = {
