@@ -153,7 +153,16 @@ export const routes = [
         name: "itinerario",
         meta: { layout: 'LayoutPrincipal'},
         component: () => import("../views/Itinerario.vue"),
-    }
+    }, 
+    {
+        path: "/itinerarios",
+        name: "itinerarios",
+        // props: (route) => ({
+        //     linhaId: route.query.linhaId, 
+        // }),
+        meta: { layout: 'LayoutPrincipal'},
+        component: () => import("../views/Itinerarios.vue"),
+    },
 ];
 
 export const router = createRouter({

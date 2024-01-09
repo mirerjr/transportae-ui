@@ -19,7 +19,7 @@
                     <CardBtn @click="$router.push('/usuarios')">
                         <PhUser weight="light" class="text-3xl" /> Usuários Cadastrados
                     </CardBtn>
-                    <CardBtn>
+                    <CardBtn @click="$router.push('/itinerarios')">
                         <PhPath weight="light" class="text-3xl" /> Itinerários executados
                     </CardBtn>
                 </section>
