@@ -50,7 +50,7 @@
                         </BaseBtn>
                     </div>
                     <div v-else-if="linha?.ultimoItinerarioHoje?.tipoItinerario == 'IDA' || !linha?.ultimoItinerarioHoje" class="">
-                        <BaseBtn variante-cor="green" variante-tamanho="sm" class="mt-4" @click="cadastrarItinerario(linha)">
+                        <BaseBtn v-show="perfilUsuario == 'MOTORISTA'" variante-cor="green" variante-tamanho="sm" class="mt-4" @click="cadastrarItinerario(linha)">
                             <PhPath class="mr-2" />
                             Iniciar itinerário
                         </BaseBtn>
