@@ -14,7 +14,7 @@
                 <p>Você não tem permissão para acessar esta página.</p>
                 <p class="mt-8">
                     Voltar para a
-                    <a class="text-cyan-500" @click="$router.push(props.nomeRotaAnterior)">
+                    <a class="text-cyan-500 cursor-pointer" @click="$router.push(props.nomeRotaAnterior)">
                         Página anterior
                         <PhArrowSquareOut class="inline-block" />
                     </a>

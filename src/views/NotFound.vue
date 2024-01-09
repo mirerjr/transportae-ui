@@ -13,14 +13,14 @@
         <h2 class="font-arimo text-2xl text-center text-gray-700 mt-8">
             <p>A página que você está tentando acessar não existe.</p>
             <p class="mt-6 mb-2">
-                <a class="text-cyan-500" @click="$router.back()">
+                <a class="text-cyan-500 cursor-pointer" @click="$router.back()">
                     Página anterior
                     <PhArrowBendUpLeft class="inline-block" />
                 </a>
             </p>
             Ou
             <p class="mt-2">
-                <a class="text-cyan-500" @click="$router.push('/')">
+                <a class="text-cyan-500 cursor-pointer" @click="$router.push('/')">
                     Página inicial
                     <PhArrowSquareOut class="inline-block" />
                 </a>
