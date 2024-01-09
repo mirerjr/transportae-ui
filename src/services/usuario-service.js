@@ -97,6 +97,14 @@ async function cadastrarUsuario(usuario) {
     return await apiConsumer.enviar(config);
 }
 
+async function ativarUsuario(id) {
+    const config = apiConsumer.configuracao;
+    config.metodo = 'put';
+    config.endpoint = `/usuarios/${id}/ativar`;
+
+    return await apiConsumer.enviar(config);
+}
+
 export default {
     isUsuarioLogado,
     getToken,
@@ -111,4 +119,5 @@ export default {
     getMotoristas,
     getLinhas,
     cadastrarUsuario,
+    ativarUsuario,
 }

@@ -47,31 +47,33 @@
                         <li 
                             v-for="usuario in usuarios" 
                             :key="usuario.id"
-                            class="flex items-center p-2 mb-2 rounded-lg shadow-sm text-gray-700"
+                            class="p-2 mb-2 rounded-lg shadow-sm text-gray-700"
                             :class="isMotorista(usuario) ? '' : ''"
                         >
-                            <ImgUsuario
-                                v-if="isMotorista(usuario)"
-                                :nome="usuario.nome"
-                                :class="'border-red-200'"
-                                :icone="PhSteeringWheel"
-                            />
-                            <ImgUsuario
-                                v-else
-                                :nome="usuario.nome"
-                                :class="'border-blue-100'"
-                                :icone="PhStudent"
-                            />
-                            <div class="flex flex-col ml-2">
-                                <span class="text-sm xl:text-base text-gray-800 break-all">
-                                    {{ usuario.nome }}
-                                </span>
-                                <span 
-                                    class="text-xs xl:text-sm flex items-center "
-                                    :class="isMotorista(usuario) ? 'text-red-300' : 'text-blue-300'"
-                                >
-                                    {{ usuario.perfil }}
-                                </span>
+                            <div class="flex items-center">
+                                <ImgUsuario
+                                    v-if="isMotorista(usuario)"
+                                    :nome="usuario.nome"
+                                    :class="'border-red-200'"
+                                    :icone="PhSteeringWheel"
+                                />
+                                <ImgUsuario
+                                    v-else
+                                    :nome="usuario.nome"
+                                    :class="'border-blue-100'"
+                                    :icone="PhStudent"
+                                />
+                                <div class="flex flex-col ml-2">
+                                    <span class="text-sm xl:text-base text-gray-800 break-all">
+                                        {{ usuario.nome }}
+                                    </span>
+                                    <span 
+                                        class="text-xs xl:text-sm flex items-center "
+                                        :class="isMotorista(usuario) ? 'text-red-300' : 'text-blue-300'"
+                                    >
+                                        {{ usuario.perfil }}
+                                    </span>
+                                </div>
                             </div>
                             <!-- TODO: definir as opções para cada usuário -->
                             <!-- <button
@@ -80,6 +82,14 @@
                             >
                                 <PhPencilSimple class="me-1" /> Exibir
                             </button> -->
+                            <div v-if="usuario?.emailVerificado == false">
+                                <button
+                                    @click="usuarioService .ativarUsuario(usuario.id)"
+                                    class="flex items-center text-green-500"
+                                >
+                                    <PhEnvelope class="me-1" /> Ativar usuario
+                                </button>
+                            </div>
                         </li>
                     </ul>
                 </template>
@@ -120,7 +130,7 @@
 </template>
 <script setup>
 import { ref, onMounted, reactive } from 'vue';
-import { PhPlus, PhBus, PhStudent, PhSteeringWheel, PhUser, PhMapPinLine } from '@phosphor-icons/vue';
+import { PhPlus, PhBus, PhStudent, PhSteeringWheel, PhUser, PhMapPinLine, PhEnvelope } from '@phosphor-icons/vue';
 import Timeline from '../components/Timeline.vue';
 
 import linhaService from '../services/linha-service';
@@ -133,6 +143,7 @@ import BaseBtn from '../components/form/BaseBtn.vue';
 import { router } from '../routes';
 import ImgUsuario from '../components/ImgUsuario.vue';
 import TimelineItem from '../components/TimelineItem.vue';
+import usuarioService from '../services/usuario-service';
 
 const props = defineProps(['id']);
 
