@@ -31,11 +31,19 @@ function cadastrarItinerario(itinerario) {
     config.conteudo = itinerario;
 
     return apiConsumer.enviar(config);
+}
 
+function concluirItinerario(itinerarioId) {
+    const config = apiConsumer.configuracao;
+    config.metodo = 'put';
+    config.endpoint = `/itinerarios/${itinerarioId}/concluir`;
+
+    return apiConsumer.enviar(config);
 }
 
 export default {
     getItinerario,
+    concluirItinerario,
     cadastrarItinerario,
     getItinerarioPorLinha,
     getItinerarioEmAndamentoPorLinha,
