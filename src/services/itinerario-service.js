@@ -8,6 +8,14 @@ function getItinerario(id) {
     return apiConsumer.enviar(config);
 }
 
+function listarItinerarios() {
+    const config = apiConsumer.configuracao;
+    config.metodo = 'get';
+    config.endpoint = `/itinerarios`;
+
+    return apiConsumer.enviar(config);
+}
+
 function getItinerarioPorLinha(linhaId) {
     const config = apiConsumer.configuracao;
     config.metodo = 'get';
@@ -33,6 +41,14 @@ function cadastrarItinerario(itinerario) {
     return apiConsumer.enviar(config);
 }
 
+function listarItinerarioPorUsuario(usuarioId) {
+    const config = apiConsumer.configuracao;
+    config.metodo = 'get';
+    config.endpoint = `/usuarios/${usuarioId}/itinerarios`;
+
+    return apiConsumer.enviar(config);
+}
+
 function concluirItinerario(itinerarioId) {
     const config = apiConsumer.configuracao;
     config.metodo = 'put';
@@ -43,8 +59,10 @@ function concluirItinerario(itinerarioId) {
 
 export default {
     getItinerario,
+    listarItinerarios,
     concluirItinerario,
     cadastrarItinerario,
     getItinerarioPorLinha,
+    listarItinerarioPorUsuario,
     getItinerarioEmAndamentoPorLinha,
 }

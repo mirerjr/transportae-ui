@@ -6,23 +6,6 @@
                 Início
             </template>
             <template #conteudo>
-                <div v-if="perfilUsuario == 'MOTORISTA'">
-                    <span class="text-xl text-gray-700">
-                    <!-- Existe um itinerário em andamento -->
-                        <BaseBtn variante-cor="green" class="mt-4" @click="cadastrarItinerario">
-                            <PhPath class="mr-2" />
-                            Iniciar itinerário
-                        </BaseBtn>
-                    </span>
-                </div>
-            </template>
-        </BaseCard>
-        <BaseCard>
-            <template #cabecalho>
-                <PhBus class="mr-2" />
-                Minhas Linhas
-            </template>
-            <template #conteudo>
                 <span class="text-2xl font-gudea">
                     
                 </span>
@@ -53,9 +36,24 @@
                         </div>
                     </div>
                     <div>
-                        <span class="text-sm text-gray-700">
-                            <!-- Status: Próximo itinerário: 21/01/2024 -->
+                        <span v-if="linha?.ultimoItinerarioHoje" class="text-sm text-gray-700">
+                            Status: Itinerário ({{ linha.ultimoItinerarioHoje.tipoItinerario }}) {{ linha?.ultimoItinerarioHoje?.ultimoStatus ?? 'N/D' }}
                         </span>
+                        <span v-else class="text-sm text-gray-700">
+                            Status: Próximo itinerário: {{ linha?.horarioProximoItinerario ? $filters.formatarDataHora(linha?.horarioProximoItinerario) : 'N/D' }}
+                        </span>
+                    </div>
+                    <div v-if="linha?.ultimoItinerarioHoje?.ultimoStatus == 'INICIADO'">
+                        <BaseBtn variante-cor="blue" variante-tamanho="sm" class="mt-4" @click="() => router.push(`/itinerario/${linha?.ultimoItinerarioHoje?.id}`)">
+                            <PhArrowRight class="mr-2" />
+                            Continuar itinerário
+                        </BaseBtn>
+                    </div>
+                    <div v-else-if="linha?.ultimoItinerarioHoje?.tipoItinerario == 'IDA' || !linha?.ultimoItinerarioHoje" class="">
+                        <BaseBtn variante-cor="green" variante-tamanho="sm" class="mt-4" @click="cadastrarItinerario(linha)">
+                            <PhPath class="mr-2" />
+                            Iniciar itinerário
+                        </BaseBtn>
                     </div>
                 </div>
             </template>            
@@ -65,7 +63,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { PhBus, PhHouse, PhPath, PhSteeringWheel, PhUsers } from '@phosphor-icons/vue';
+import { PhArrowRight, PhBus, PhHouse, PhPath, PhSteeringWheel, PhUsers } from '@phosphor-icons/vue';
 import BaseCard from '../components/BaseCard.vue';
 import IdentificadorLinha from '../components/IdentificadorLinha.vue';
 import linhaService from '../services/linha-service';
@@ -111,11 +109,9 @@ async function getLinhas() {
     }
 }
 
-async function cadastrarItinerario() {
-    const idLinha = linhas.value[0].id;
-
+async function cadastrarItinerario(linha) {
     try {
-        const novoItinerario = formatarItinerarioParaCadastro();
+        const novoItinerario = formatarItinerarioParaCadastro(linha);
         const resposta = await itinerarioService.cadastrarItinerario(novoItinerario);
 
         const itinerario = resposta.data;
@@ -130,10 +126,12 @@ async function cadastrarItinerario() {
     }
 }
 
-function formatarItinerarioParaCadastro() {
+function formatarItinerarioParaCadastro(linha) {
+    const tipoItinerario = linha?.ultimoItinerarioHoje?.tipoItinerario == 'IDA' ? "VOLTA" : "IDA";
+
     const itinerario = {
-        linhaTransporteId: linhas.value[0].id,
-        tipoItinerario: "IDA",
+        linhaTransporteId: linha.id,
+        tipoItinerario: tipoItinerario,
     }
 
     return itinerario;

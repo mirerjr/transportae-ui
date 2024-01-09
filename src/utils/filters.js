@@ -1,6 +1,12 @@
+import { format } from "date-fns";
+
 function formatarHoraMinuto(horario) {
     const [hora, minuto] = horario.split(':');
     return `${hora}:${minuto}`;
+}
+
+function formatarDataHora(data) {
+    return format(new Date(data), 'dd/MM/yyyy HH:mm');
 }
 
 function getPrimeiroUltimoNome(nomeCompleto) {
@@ -12,6 +18,7 @@ function getPrimeiroUltimoNome(nomeCompleto) {
 }
 
 export default {
+    formatarDataHora,
     formatarHoraMinuto,
     getPrimeiroUltimoNome,
 }
