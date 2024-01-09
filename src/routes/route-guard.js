@@ -15,7 +15,7 @@ export const beforeEachGuard = (to, from) => {
         return { 
             name: "forbbiden",
             query: {
-                rotaAnterior: from.name
+                rotaAnterior: from.path
             }
         };
     }
