@@ -28,12 +28,12 @@ export const routes = [
         meta: { layout: 'LayoutLogo'},
         component: () => import("../views/AlterarSenha.vue"),
     },
-    // {
-    //     path: "/",
-    //     name: "home",
-    //     meta: { layout: 'LayoutPrincipal' },
-    //     component: () => import("../views/Home.vue"),
-    // },
+    {
+        path: "/",
+        name: "home",
+        meta: { layout: 'LayoutPrincipal' },
+        component: () => import("../views/Home.vue"),
+    },
     {
         path: "/admin",
         name: "admin",

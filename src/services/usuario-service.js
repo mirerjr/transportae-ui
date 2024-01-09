@@ -12,6 +12,12 @@ function getToken() {
     return usuarioStore.getToken() || usuarioStore.tokenTemporario;
 }
 
+function getIdUsuario() {
+    const token = getToken();
+    const tokenDecodificado = jwtDecode(token);
+    return tokenDecodificado?.id;
+}
+
 function getPerfilUsuario() {
     const token = getToken();
     const tokenDecodificado = jwtDecode(token);
@@ -74,6 +80,14 @@ async function getMotoristas() {
     return await apiConsumer.enviar(config);
 }
 
+async function getLinhas(id) {
+    const config = apiConsumer.configuracao;
+    config.metodo = 'get';
+    config.endpoint = `/usuarios/${id}/linhas`;
+
+    return await apiConsumer.enviar(config);
+}
+
 async function cadastrarUsuario(usuario) {
     const config = apiConsumer.configuracao;
     config.metodo = 'post';
@@ -86,6 +100,7 @@ async function cadastrarUsuario(usuario) {
 export default {
     isUsuarioLogado,
     getToken,
+    getIdUsuario,
     getPerfilUsuario,
     isTokenExpirado,
     logar,
@@ -94,5 +109,6 @@ export default {
     getUsuarioLogado,
     listarUsuarios,
     getMotoristas,
+    getLinhas,
     cadastrarUsuario,
 }

@@ -8,6 +8,14 @@ function getLinha(id) {
     return apiConsumer.enviar(config);
 }
 
+function getMotorista(id) {
+    const config = apiConsumer.configuracao;
+    config.metodo = 'get';
+    config.endpoint = `/linhas/${id}/usuarios?perfil=MOTORISTA`;
+
+    return apiConsumer.enviar(config);
+}
+
 function cadastrarLinha(linha) {
     const config = apiConsumer.configuracao;
     config.metodo = 'post';
@@ -56,6 +64,7 @@ function getTurnoLinhaSelecionado(turnoSelecionado) {
 
 export default {
     getLinha,
+    getMotorista,
     cadastrarLinha,
     listarLinhas,
     getTurnoLinha,
