@@ -147,10 +147,14 @@ export const routes = [
         },
         component: () => import("../views/NovoPonto.vue"),
     },
+    {
+        path: "/itinerario/:id",
+        props: true,
+        name: "itinerario",
+        meta: { layout: 'LayoutPrincipal'},
+        component: () => import("../views/Itinerario.vue"),
+    }
 ];
-
-// TODO: Criar tela 404
-// https://router.vuejs.org/guide/essentials/dynamic-matching.html#Catch-all-404-Not-found-Route
 
 export const router = createRouter({
     history: createWebHashHistory(),

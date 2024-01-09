@@ -1,6 +1,6 @@
 <template>
      <div class="flex items-center w-full my-6 -ml-1.5">
-        <div class="w-1/12 mr-2 z-10">
+        <div class="w-1/12 mr-3 z-10">
             <div class="w-5 h-5 bg-cyan-500 rounded-full flex items-center justify-center">
                 <component 
                     v-if="props.icone"
