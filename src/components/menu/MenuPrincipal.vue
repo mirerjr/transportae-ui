@@ -10,6 +10,7 @@
                     </div>
                     <PhCaretDown class="ml-1 pl-0.5 mt-1" />
                 </button>
+                <!-- TODO: Tornar active os itens do menu abertos -->
                 <ul class="mt-0 pt-1 absolute hidden rounded bg-white shadow-md text-sm text-gray-600 group-hover:block">
                     <li
                         @click="$router.push('/perfil')"
@@ -30,17 +31,18 @@
             <BtnMenu  
                 texto="Início" 
                 :icone="PhHouse" 
-                @click="$router.push('/')"
+                @click="goToInicio()"
             />
             <BtnMenu  
-                texto="Itinerário" 
+                texto="Itinerários" 
                 :icone="PhPath" 
-                @click="$router.push('/')"
+                @click="$router.push('/itinerarios')"
             />
             <BtnMenu  
                 texto="Avisos"
                 :icone="PhBell" 
             />
+            <!-- Listar ultimos status de itinerarios -->
             <!-- <button class="text-gray-800 focus:outline-none">
                 <PhGear class="text-2xl" />
             </button> -->
@@ -50,16 +52,19 @@
 <script setup>
 import { PhBell, PhHouse, PhPath, PhGear, PhSignOut, PhCaretDown, PhUser } from '@phosphor-icons/vue';
 import { router } from '../../routes';
-import { reactive, onMounted } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 
 import ImgUsuario from '../ImgUsuario.vue';
 import BtnMenu from './BtnMenu.vue';
 import usuarioService from '../../services/usuario-service';
+import filters from '../../utils/filters';
 
 const usuario = reactive({
     nome: '',
     perfil: ''
 });
+
+const perfilUsuario = ref('');
 
 onMounted(async () => {
     try {
@@ -68,6 +73,7 @@ onMounted(async () => {
 
         usuario.nome = filters.getPrimeiroUltimoNome(nome);
         usuario.perfil = getPerfilUsuario(perfil);
+        perfilUsuario.value = perfil;
 
     } catch (erro) {
         console.log("Erro ao buscar os dados do usuário logado", erro);
@@ -83,5 +89,13 @@ function getPerfilUsuario(perfil) {
     };
 
     return perfis[perfil];
+}
+
+async function goToInicio() {
+    if (perfilUsuario.value == 'ADMIN') {
+        await router.push('/admin');
+    } else {
+        await router.push('/');
+    }
 }
 </script>

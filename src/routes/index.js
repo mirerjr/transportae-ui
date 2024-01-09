@@ -41,7 +41,7 @@ export const routes = [
             layout: 'LayoutPrincipal',
             perfil: "ADMIN", 
         },
-        component: () => import("../views/admin.vue"),
+        component: () => import("../views/Admin.vue"),
     },
     {
         path: "/cadastrar-endereco",
