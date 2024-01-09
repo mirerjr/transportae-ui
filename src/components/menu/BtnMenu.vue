@@ -1,5 +1,5 @@
 <template>
-    <a href="#" @click="$emit('click')" class="relative group">
+    <a @click="$emit('click')" class="relative group">
         <span class="flex flex-col items-center">
             <component
                 v-if="props.icone"
